@@ -17,6 +17,6 @@
             Rectangle rect,
             ImageLockMode mode = ImageLockMode.ReadWrite,
             PixelFormat fmt = PixelFormat.Format24bppRgb) =>
-                LockedBitmapData.Create(self);
+                LockedBitmapData.Create(self, rect);
     }
 }
