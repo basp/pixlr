@@ -10,5 +10,8 @@ namespace Pixlr
 
         public static Color GS(this double i) =>
             Color.FromArgb((byte)(i * 256), (byte)(i * 256), (byte)(i * 256));
+
+        public static Color Inv(this Color self) =>
+            Color.FromArgb(255 - self.R, 255 - self.R, 255 - self.R);
     }
 }
