@@ -7,6 +7,6 @@ namespace Pixlr.Lina
     {
         Matrix<U> Valid(Matrix<U> u);
         Matrix<U> Same(Matrix<U> u);
-        Matrix<U> All(Vector<U> u);
+        Matrix<U> All(Matrix<U> u);
     }
 }
