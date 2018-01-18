@@ -1,2 +1,2 @@
 # pixlr
-Functional operations and combinators for bitmaps
+Functional operations and combinators for bitmaps.
