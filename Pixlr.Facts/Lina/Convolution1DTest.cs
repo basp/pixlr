@@ -1,4 +1,4 @@
-namespace Pixlr.Lina
+namespace Pixlr.Lina.Facts
 {
     using Xunit;
 
