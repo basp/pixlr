@@ -5,7 +5,7 @@ namespace Pixlr
     using System.Drawing.Imaging;
     using Lina;
 
-    public class LockedBitmapData : IDisposable
+    public unsafe class LockedBitmapData : IDisposable
     {
         private bool disposed = false;
 
@@ -13,34 +13,36 @@ namespace Pixlr
 
         private readonly BitmapData data;
 
+        private byte* scan0;
+
+        private int stride;
+
         private LockedBitmapData(Bitmap src, BitmapData data)
         {
             this.src = src;
             this.data = data;
+            this.scan0 = (byte*)this.data.Scan0;
+            this.stride = this.data.Stride;
         }
 
-        public unsafe Color this[int x, int y]
+        public Color this[int x, int y]
         {
             get => this.At(x, y);
             set => this.At(x, y, value);
         }
 
-        public unsafe Color At(int x, int y)
+        public Color At(int x, int y)
         {
-            var scan0 = (byte*)this.data.Scan0;
-            var stride = this.data.Stride;
-            var row = scan0 + (y * stride);
+            var row = this.GetRow(y);
             var bi = x * BytesPerPixel;
             var gi = bi + 1;
             var ri = bi + 2;
             return Color.FromArgb(row[ri], row[gi], row[bi]);
         }
 
-        public unsafe void At(int x, int y, Color color)
+        public void At(int x, int y, Color color)
         {
-            var scan0 = (byte*)this.data.Scan0;
-            var stride = this.data.Stride;
-            var row = scan0 + (y * stride);
+            var row = this.GetRow(y);
             var bi = x * BytesPerPixel;
             var gi = bi + 1;
             var ri = bi + 2;
@@ -54,6 +56,8 @@ namespace Pixlr
 
         public static LockedBitmapData Create(Bitmap src, Rectangle rect) =>
             new LockedBitmapData(src, LockBits(src, rect));
+
+        private byte* GetRow(int y) => this.scan0 + (y * this.stride);
 
         private static BitmapData LockBits(
             Bitmap src,
@@ -76,15 +80,13 @@ namespace Pixlr
 
         private const int BytesPerPixel = 3;
 
-        public unsafe Matrix<U> ToMatrix<U>(Func<Color, U> f)
+        public Matrix<U> ToMatrix<U>(Func<Color, U> f)
             where U : struct, IEquatable<U>
         {
             var m = Matrix.Create<U>(this.data.Height, this.data.Width);
-            var scan0 = (byte*)this.data.Scan0;
-            var stride = this.data.Stride;
             for (var y = 0; y < this.data.Height; y++)
             {
-                var row = scan0 + (y * stride);
+                var row = this.GetRow(y);
                 for (var x = 0; x < this.data.Width; x++)
                 {
                     var bi = x * BytesPerPixel;
@@ -103,13 +105,11 @@ namespace Pixlr
             return m;
         }
 
-        public unsafe void MapInPlace(Func<Color, Color> f)
+        public void MapInPlace(Func<Color, Color> f)
         {
-            var scan0 = (byte*)this.data.Scan0;
-            var stride = this.data.Stride;
             for (var y = 0; y < this.data.Height; y++)
             {
-                var row = scan0 + (y * stride);
+                var row = this.GetRow(y);
                 for (var x = 0; x < this.data.Width; x++)
                 {
                     // Note that order is BGR (blame Microsoft)
