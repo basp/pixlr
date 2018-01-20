@@ -19,20 +19,34 @@ namespace Pixlr
             this.data = data;
         }
 
-        public Color this[int row, int column]
+        public unsafe Color this[int x, int y]
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => this.At(x, y);
+            set => this.At(x, y, value);
         }
 
-        public Color At(int row, int column)
+        public unsafe Color At(int x, int y)
         {
-            throw new NotImplementedException();
+            var scan0 = (byte*)this.data.Scan0;
+            var stride = this.data.Stride;
+            var row = scan0 + (y * stride);
+            var bi = x * BytesPerPixel;
+            var gi = bi + 1;
+            var ri = bi + 2;
+            return Color.FromArgb(row[ri], row[gi], row[bi]);
         }
 
-        public void At(int row, int column, Color color)
+        public unsafe void At(int x, int y, Color color)
         {
-            throw new NotImplementedException();
+            var scan0 = (byte*)this.data.Scan0;
+            var stride = this.data.Stride;
+            var row = scan0 + (y * stride);
+            var bi = x * BytesPerPixel;
+            var gi = bi + 1;
+            var ri = bi + 2;
+            row[ri] = color.R;
+            row[gi] = color.G;
+            row[bi] = color.B;
         }
 
         public static LockedBitmapData Create(Bitmap src) =>
@@ -62,7 +76,7 @@ namespace Pixlr
 
         private const int BytesPerPixel = 3;
 
-        private unsafe Matrix<U> MapToMatrix<U>(Func<Color, U> f)
+        public unsafe Matrix<U> ToMatrix<U>(Func<Color, U> f)
             where U : struct, IEquatable<U>
         {
             var m = Matrix.Create<U>(this.data.Height, this.data.Width);
@@ -73,7 +87,6 @@ namespace Pixlr
                 var row = scan0 + (y * stride);
                 for (var x = 0; x < this.data.Width; x++)
                 {
-                    // Note that order is BGR (blame Microsoft)
                     var bi = x * BytesPerPixel;
                     var gi = bi + 1;
                     var ri = bi + 2;
