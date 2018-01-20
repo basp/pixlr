@@ -10,7 +10,7 @@ var lum = color.Lum();
 
 Convert a `double` to a grayscale color:
 ```
-var v = 0.23;
+var v = Color.FromArgb(100, 50, 200).Lum();
 var color = v.GS();
 ```
 
