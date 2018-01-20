@@ -3,6 +3,7 @@ namespace Pixlr
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using Lina;
 
     public class LockedBitmapData : IDisposable
     {
@@ -22,6 +23,16 @@ namespace Pixlr
         {
             get => throw new NotImplementedException();
             set => throw new NotImplementedException();
+        }
+
+        public Color At(int row, int column)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void At(int row, int column, Color color)
+        {
+            throw new NotImplementedException();
         }
 
         public static LockedBitmapData Create(Bitmap src) =>
@@ -49,15 +60,44 @@ namespace Pixlr
         private static Rectangle RectangleFromSource(Bitmap src) =>
             new Rectangle(0, 0, src.Width, src.Height);
 
-        public unsafe void MapInPlace(Func<Color, Color> f)
+        private const int BytesPerPixel = 3;
+
+        private unsafe Matrix<U> MapToMatrix<U>(Func<Color, U> f)
+            where U : struct, IEquatable<U>
         {
-            const int BytesPerPixel = 3;
-            var scan0 = (byte*)data.Scan0;
-            var stride = data.Stride;
-            for (var y = 0; y < data.Height; y++)
+            var m = Matrix.Create<U>(this.data.Height, this.data.Width);
+            var scan0 = (byte*)this.data.Scan0;
+            var stride = this.data.Stride;
+            for (var y = 0; y < this.data.Height; y++)
             {
                 var row = scan0 + (y * stride);
-                for (var x = 0; x < data.Width; x++)
+                for (var x = 0; x < this.data.Width; x++)
+                {
+                    // Note that order is BGR (blame Microsoft)
+                    var bi = x * BytesPerPixel;
+                    var gi = bi + 1;
+                    var ri = bi + 2;
+
+                    var r = row[ri];
+                    var g = row[gi];
+                    var b = row[bi];
+
+                    var u = Color.FromArgb(r, g, b);
+                    m[y, x] = f(u);
+                }
+            }
+
+            return m;
+        }
+
+        public unsafe void MapInPlace(Func<Color, Color> f)
+        {
+            var scan0 = (byte*)this.data.Scan0;
+            var stride = this.data.Stride;
+            for (var y = 0; y < this.data.Height; y++)
+            {
+                var row = scan0 + (y * stride);
+                for (var x = 0; x < this.data.Width; x++)
                 {
                     // Note that order is BGR (blame Microsoft)
                     var bi = x * BytesPerPixel;

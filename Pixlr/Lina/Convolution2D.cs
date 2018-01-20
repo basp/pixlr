@@ -86,10 +86,10 @@ namespace Pixlr.Lina
                 for (var j = -this.vc[1]; j <= this.vc[1]; j++)
                 {
                     var ii = row + i;
-                    var jj = row + j;
+                    var jj = col + j;
 
                     var vv = this.v[i + this.vc[0], j + this.vc[1]];
-                    var uv = ii < 0 || ii >= u.RowCount || jj < 0 || jj > u.ColumnCount
+                    var uv = ii < 0 || ii >= u.RowCount || jj < 0 || jj >= u.ColumnCount
                         ? this.factory(ii, jj)
                         : u[ii, jj];
 

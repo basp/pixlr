@@ -7,8 +7,12 @@ namespace Pixlr.Lina
     public static class Matrix
     {
         public static Matrix<T> Create<T>(int rows, int cols, params T[] storage)
-            where T : struct, IEquatable<T> 
+            where T : struct, IEquatable<T>
             => new Matrix<T>(rows, cols, storage);
+
+        public static Matrix<T> Create<T>(int rows, int cols)
+            where T : struct, IEquatable<T>
+            => Create<T>(rows, cols, (r, c) => default(T));
 
         public static Matrix<T> Create<T>(int rows, int cols, Func<int, int, T> factory)
             where T : struct, IEquatable<T>
@@ -29,7 +33,7 @@ namespace Pixlr.Lina
         }
     }
 
-    public class Matrix<T> 
+    public class Matrix<T>
         where T : struct, IEquatable<T>
     {
         private readonly T[] storage;
