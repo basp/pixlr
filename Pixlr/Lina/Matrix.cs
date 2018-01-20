@@ -7,13 +7,12 @@ namespace Pixlr.Lina
     public static class Matrix
     {
         public static Matrix<T> Create<T>(int rows, int cols, params T[] storage)
-            where T : struct => new Matrix<T>(rows, cols, storage);
+            where T : struct, IEquatable<T> 
+            => new Matrix<T>(rows, cols, storage);
 
         public static Matrix<T> Create<T>(int rows, int cols, Func<int, int, T> factory)
-            where T : struct => new Matrix<T>(
-                rows,
-                cols,
-                CreateValues(rows, cols, factory).ToArray());
+            where T : struct, IEquatable<T>
+            => new Matrix<T>(rows, cols, CreateValues(rows, cols, factory).ToArray());
 
         private static IEnumerable<T> CreateValues<T>(
             int rows,
@@ -30,7 +29,8 @@ namespace Pixlr.Lina
         }
     }
 
-    public class Matrix<T> where T : struct
+    public class Matrix<T> 
+        where T : struct, IEquatable<T>
     {
         private readonly T[] storage;
         private int rows;
@@ -55,6 +55,30 @@ namespace Pixlr.Lina
 
         public T At(int row, int col) => this[row, col];
 
+        public IConvolution2D<U> Convolution<U>(
+            Accumulator<U, T> acc,
+            Func<int, int, U> factory)
+            where U : struct, IEquatable<U>
+        {
+            this.ValidateKernel();
+            return new Convolution2D<U, T>(this, acc, factory);
+        }
+
         private int GetIndex(int row, int col) => col * this.rows + row;
+
+        private void ValidateKernel()
+        {
+            if (this.RowCount % 2 == 0)
+            {
+                var msg = $"You can only create a convolution kernel instance from a matrix with an odd size and this matrix has {this.RowCount} rows.";
+                throw new ArgumentException(msg, nameof(this.RowCount));
+            }
+
+            if (this.ColumnCount % 2 == 0)
+            {
+                var msg = $"You can only create a convolution kernel instance from a matrix with an odd size and this matrix has {this.ColumnCount} columns.";
+                throw new ArgumentException(msg, nameof(this.ColumnCount));
+            }
+        }
     }
 }

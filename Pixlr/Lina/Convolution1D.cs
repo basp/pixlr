@@ -2,8 +2,6 @@ namespace Pixlr.Lina
 {
     using System;
 
-    public delegate U Accumulator<U, V>(U s, U u, V v);
-
     internal class Convolution1D<U, V> : IConvolution1D<U>
         where U : struct, IEquatable<U>
         where V : struct, IEquatable<V>
@@ -26,57 +24,63 @@ namespace Pixlr.Lina
 
         public Vector<U> Valid(Vector<U> u)
         {
-            var strat = ConvolutionStrategy1D.Create(this.acc, factory, cfg =>
+            var strat = new ConvolutionStrategy1D
             {
-                cfg.StartInclusive = this.vc;
-                cfg.StopExclusive = u.Length - this.vc;
-                cfg.TargetLength = u.Length - 2 * this.vc;
-            });
+                StartInclusive = this.vc,
+                StopExclusive = u.Length - this.vc,
+                TargetLength = u.Length - 2 * this.vc,
+            };
 
             return this.Convolve(u, strat);
         }
 
         public Vector<U> Same(Vector<U> u)
         {
-            var strat = ConvolutionStrategy1D.Create(this.acc, this.factory, cfg =>
+            var strat = new ConvolutionStrategy1D
             {
-                cfg.StartInclusive = 0;
-                cfg.StopExclusive = u.Length;
-                cfg.TargetLength = u.Length;
-            });
+                StartInclusive = 0,
+                StopExclusive = u.Length,
+                TargetLength = u.Length,
+            };
 
             return this.Convolve(u, strat);
         }
 
         public Vector<U> All(Vector<U> u)
         {
-            var strat = ConvolutionStrategy1D.Create(this.acc, this.factory, cfg =>
+            var strat = new ConvolutionStrategy1D
             {
-                cfg.StartInclusive = -this.vc;
-                cfg.StopExclusive = u.Length + this.vc;
-                cfg.TargetLength = u.Length + 2 * this.vc;
-            });
+                StartInclusive = -this.vc,
+                StopExclusive = u.Length + this.vc,
+                TargetLength = u.Length + 2 * this.vc,
+            };
 
             return this.Convolve(u, strat);
         }
 
-        internal Vector<U> Convolve(Vector<U> u, ConvolutionStrategy1D<U, V> strat)
+        internal U Accumulate(int i, Vector<U> u)
+        {
+            var s = default(U);
+            for (var k = -this.vc; k <= this.vc; k++)
+            {
+                var ii = i + k;                     // calculate inner index
+                var vv = this.v[k + this.vc];       // get weight (v) value from kernel
+                var uv = ii < 0 || ii >= u.Length   // is inner index out of range?
+                    ? this.factory(i)               // then fake (u) value
+                    : u[ii];                        // otherwise source (u) value
+
+                s = this.acc(s, uv, vv);
+            }
+
+            return s;
+        }
+
+        internal Vector<U> Convolve(Vector<U> u, ConvolutionStrategy1D strat)
         {
             var w = Vector.Build<U>().Dense(strat.TargetLength, _ => default(U));
             for (var i = strat.StartInclusive; i < strat.StopExclusive; i++)
             {
-                var s = default(U);
-                for (var k = -this.vc; k <= this.vc; k++)
-                {
-                    var ii = i + k;                     // calculate inner index
-                    var vv = this.v[k + this.vc];       // get weight (v) value from kernel
-                    var uv = ii < 0 || ii >= u.Length   // is inner index out of range?
-                        ? strat.GetMissingValue(i)      // then fake (u) value
-                        : u[ii];                        // otherwise source (u) value
-
-                    s = strat.Accumulate(s, uv, vv);
-                }
-
+                var s = this.Accumulate(i, u);
                 w[i - strat.StartInclusive] = s;
             }
 
