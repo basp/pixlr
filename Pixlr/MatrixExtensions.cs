@@ -1,7 +1,9 @@
 namespace Pixlr
 {
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using Pixlr.Lina;
 
     public static class MatrixExtensions

@@ -71,6 +71,7 @@
             for(var i = 0; i < this.Length - 1; i++)
             {
                 s.Append(this.At(i));
+                s.Append(" ");
             }
 
             s.Append(this.At(this.Length - 1));

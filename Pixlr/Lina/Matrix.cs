@@ -59,6 +59,45 @@ namespace Pixlr.Lina
 
         public T At(int row, int col) => this[row, col];
 
+        public void At(int row, int col, T value) => this[row, col] = value;
+
+        public IEnumerable<Vector<T>> EnumerateRows()
+        {
+            for (var r = 0; r < this.RowCount; r++)
+            {
+                var storage = Enumerable
+                    .Range(0, this.ColumnCount)
+                    .Select(c => this[r, c])
+                    .ToArray();
+
+                yield return Vector.Build<T>().Dense(storage);
+            }
+        }
+
+        public IEnumerable<Vector<T>> EnumerateColumns()
+        {
+            for (var c = 0; c < this.ColumnCount; c++)
+            {
+                var storage = Enumerable
+                    .Range(0, this.RowCount)
+                    .Select(r => this[r, c])
+                    .ToArray();
+
+                yield return Vector.Build<T>().Dense(storage);
+            }
+        }
+
+        public void MapInPlace(Func<T, T> f)
+        {
+            for (var r = 0; r < this.rows; r++)
+            {
+                for (var c = 0; c < this.cols; c++)
+                {
+                    this.At(r, c, f(this.At(r, c)));
+                }
+            }
+        }
+
         public IConvolution2D<U> Convolution<U>(
             Accumulator<U, T> acc,
             Func<int, int, U> factory)
