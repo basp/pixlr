@@ -16,7 +16,7 @@ using (var data = bmp.Lock())
     M.ToBitmap(v => v.GS()).Dump();
 }
 ```
-There's two things that are important to note about the above code.
+There's a few things that are important to note about the above code:
 * This assumes that you're evaluating **Pixlr** in **LINQPad** otherwise the `Dump` method will probably not be available and you'll most likely have to write the bitmap to disk or show it in a window in order to inspect the results.
 * Although working with matrices is *very* nice, this will consume a lot of memory. There's the original bitmap, the matrix (of equal size to the bitmap dimensions) that has (probably 64-bit) doubles and also the result bitmap that have to reside in memory at the same time for a short while (i.e. it's not inconceivable that you run into an `OutOfMemoryException` when working with large images).
 
