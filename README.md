@@ -60,7 +60,7 @@ using (var data = bmp.Lock())
 
 This technique can be useful if you need to optimize **convolutions** (see below) since you're not mapping directly into the source (not a good thing when you rely on *neighboring* values).
 
-And yes, the nested `using` blocks are a bit `fugly` indeed.
+And yes, the nested `using` blocks are a bit *fugly* indeed.
 
 ### lina
 To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than ant alternative I tried so I kept them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
