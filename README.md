@@ -62,7 +62,7 @@ This technique can be useful if you need to optimize **convolutions** (see below
 And yes, the nested `using` blocks are a bit *fugly* indeed.
 
 ### lina
-To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than ant alternative I tried so I kept them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
+To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than any alternative I tried... So I decided to keep them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
 
 ### convolutions
 TODO
