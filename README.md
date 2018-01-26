@@ -37,7 +37,7 @@ The reason we can do this is because we can map each pixel's `Color` value direc
 If you just want to enumerate over the pixels that is possible too. Below is an example of just raw looping over the pixels and copying the result into another `LockedBitmapData` instance (so not to interfere with the original sampling).
 ```
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
-using (var data = bmp.Lock())
+using (var data = bmp.Lock(ImageLockMode.ReadOnly))
 {
     using (var @out = new Bitmap(data.Width, data.Height))
     {
