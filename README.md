@@ -47,8 +47,7 @@ using (var data = bmp.Lock())
             {
                 for (var x = 0; x < data.Width; x++)
                 {
-                    var color = data[x, y];
-                    @odata[x, y] = color.Lum().GS();
+                    @odata[x, y] = data[x, y].Lum().GS();
                 }
             });
         }
