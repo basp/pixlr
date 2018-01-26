@@ -26,7 +26,7 @@ If converting to and from matrices is too slow or too memory consuming, you can 
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
 using (var data = bmp.Lock())
 {
-	data.MapInPlace(f => f.Lum().GS());
+    data.MapInPlace(f => f.Lum().GS());
     bmp.Dump();
 }
 ```
