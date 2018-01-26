@@ -8,7 +8,7 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
 using (var data = bmp.Lock())
 {
     var M = data.ToMatrix(c => c.Lum());
-	M.ToBitmap(v => v.GS()).Dump();
+    M.ToBitmap(v => v.GS()).Dump();
 }
 ```
 
