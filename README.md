@@ -19,6 +19,7 @@ using (var data = bmp.Lock())
 There's a few things that are important to note about the above code:
 * This assumes that you're evaluating **Pixlr** in **LINQPad** otherwise the `Dump` method will probably not be available and you'll most likely have to write the bitmap to disk or show it in a window in order to inspect the results.
 * Although working with matrices is *very* nice, this will consume **a lot of memory**. Eventually, there's the original bitmap, the matri(x)(ces) (of equal size to the bitmap dimensions) that have (probably **64-bit**) doubles and also the result bitmap (again, sized to the original bitmap) that have to reside in memory all at the same time for at least a short while (i.e. it's not inconceivable that you run into an `OutOfMemoryException` when casually working with large images and matrices).
+* It's quite fast.
 
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
