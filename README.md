@@ -39,8 +39,7 @@ If you just want to enumerate over the pixels that is easy enough as well. Below
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
 using (var data = bmp.Lock())
 {
-    Bitmap @out;
-    using (@out = new Bitmap(data.Width, data.Height))
+    using (var @out = new Bitmap(data.Width, data.Height))
     {
         using (var @odata = @out.Lock(ImageLockMode.WriteOnly))
         {
