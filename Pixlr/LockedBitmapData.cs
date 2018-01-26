@@ -3,6 +3,7 @@ namespace Pixlr
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
+    using System.Threading.Tasks;
     using Lina;
 
     public unsafe class LockedBitmapData : IDisposable
@@ -84,7 +85,7 @@ namespace Pixlr
             where U : struct, IEquatable<U>
         {
             var m = Matrix.Create<U>(this.data.Height, this.data.Width);
-            for (var y = 0; y < this.data.Height; y++)
+            Parallel.For(0, this.data.Height, y =>
             {
                 var row = this.GetRow(y);
                 for (var x = 0; x < this.data.Width; x++)
@@ -100,19 +101,18 @@ namespace Pixlr
                     var u = Color.FromArgb(r, g, b);
                     m[y, x] = f(u);
                 }
-            }
+            });
 
             return m;
         }
 
         public void MapInPlace(Func<Color, Color> f)
         {
-            for (var y = 0; y < this.data.Height; y++)
+            Parallel.For(0, this.data.Height, y =>
             {
                 var row = this.GetRow(y);
                 for (var x = 0; x < this.data.Width; x++)
                 {
-                    // Note that order is BGR (blame Microsoft)
                     var bi = x * BytesPerPixel;
                     var gi = bi + 1;
                     var ri = bi + 2;
@@ -127,7 +127,7 @@ namespace Pixlr
                     row[gi] = v.G;
                     row[bi] = v.B;
                 }
-            }
+            });
         }
 
         protected virtual void Dispose(bool disposing)

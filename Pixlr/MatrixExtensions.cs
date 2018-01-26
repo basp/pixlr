@@ -4,6 +4,7 @@ namespace Pixlr
     using System.Collections.Generic;
     using System.Drawing;
     using System.Linq;
+    using System.Threading.Tasks;
     using Pixlr.Lina;
 
     public static class MatrixExtensions
@@ -14,7 +15,7 @@ namespace Pixlr
             var bmp = new Bitmap(self.ColumnCount, self.RowCount);
             using (var data = bmp.Lock())
             {
-                for (var y = 0; y < self.RowCount; y++)
+                Parallel.For(0, self.RowCount, y =>
                 {
                     for (var x = 0; x < self.ColumnCount; x++)
                     {
@@ -22,7 +23,7 @@ namespace Pixlr
                         var v = f(u);
                         data.At(x, y, v);
                     }
-                }
+                });
             }
 
             return bmp;
