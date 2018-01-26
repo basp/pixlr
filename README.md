@@ -33,8 +33,30 @@ using (var data = bmp.Lock())
 
 The reason we can do this is because we can map each pixel's `Color` value directly to another `Color` value. This is absolutely the best way to go if you have such a simple operation (like converting an image to colorscale) but for more advanced things you can't *mutilate* the original source.
 
+### just enumerating
+If you just want to enumerate over the pixels that easy enough as well. Below is the most basic way you can approach this, just straight looping over every row and column:
+```
+using (var bmp = (Bitmap)Bitmap.FromFile(path))
+using (var data = bmp.Lock())
+using (var @out = new Bitmap(data.Width, data.Height))
+{
+    for (var y = 0; y < data.Height; y++)
+    {
+        for (var x = 0; x < data.Width; x++)
+        {
+            var color = data[x, y];
+            @out[x, y] = color.Lum().GS();
+        }
+    }
+
+    @out.Dump();
+}
+```
+
+This technique can be useful if you need to optimize **convolutions** (see below) since you're not mapping directly into the source (not a good thing when you rely on *neighboring* values).
+
 ### lina
-TODO
+To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than ant alternative I tried so I kept them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
 
 ### convolutions
 TODO
