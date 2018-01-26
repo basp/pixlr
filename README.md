@@ -31,7 +31,9 @@ using (var data = bmp.Lock())
 }
 ```
 
-The reason we can do this is because we can map each pixel's `Color` value directly to another `Color` value. This is absolutely the best way to go if you have such a simple operation (like converting an image to colorscale) but for more advanced things you can't *mutilate* the original source.
+The reason we can do this is because we can map each pixel's `Color` value directly to another `Color` value. This is absolutely the best way to go if you have such a simple operation (like converting an image to colorscale) but for more advanced things you can't *mutilate* the original source. 
+
+If we want to preserve the original bitmap, we probably have to prepare an *output buffer* in the form of anoter `Bitmap` instance and place our results into there, keeping the original bitmap intact. In this case, we just want to enumerate over the pixels as fast as possible and do something, *whatever*, and place them in our own custom memory space.
 
 ### just enumerating
 If you just want to enumerate over the pixels that is possible too. Below is an example of just raw looping over the pixels and copying the result into another `LockedBitmapData` instance (so not to interfere with the original sampling).
