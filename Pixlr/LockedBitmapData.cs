@@ -52,6 +52,10 @@ namespace Pixlr
             row[bi] = color.B;
         }
 
+        public int Width => this.data.Width;
+
+        public int Height => this.data.Height;
+
         public static LockedBitmapData Create(Bitmap src) =>
             new LockedBitmapData(src, LockBits(src));
 

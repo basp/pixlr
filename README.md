@@ -38,40 +38,28 @@ If you just want to enumerate over the pixels that is easy enough as well. Below
 ```
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
 using (var data = bmp.Lock())
-using (var @out = new Bitmap(data.Width, data.Height))
 {
-    for (var y = 0; y < data.Height; y++)
+    Bitmap @out;
+    using (@out = new Bitmap(data.Width, data.Height))
     {
-        for (var x = 0; x < data.Width; x++)
+        using (var @odata = @out.Lock(ImageLockMode.WriteOnly))
         {
-            var color = data[x, y];
-            @out[x, y] = color.Lum().GS();
+            Parallel.For(0, data.Height, y =>
+            {
+                for (var x = 0; x < data.Width; x++)
+                {
+                    var color = data[x, y];
+                    @odata[x, y] = color.Lum().GS();
+                }
+            });
         }
+        
+        @out.Dump();
     }
-
-    @out.Dump();
 }
 ```
 
 This technique can be useful if you need to optimize **convolutions** (see below) since you're not mapping directly into the source (not a good thing when you rely on *neighboring* values).
-
-Also, if we really wanted to write something like the example above, we could probably speed it up by a factor of two by doing the outer loop in parallel:
-```
-using (var bmp = (Bitmap)Bitmap.FromFile(path))
-using (var data = bmp.Lock())
-using (var @out = new Bitmap(data.Width, data.Height))
-{
-    Parallel.For(0, data.Height, y => {
-        for (var x = 0; x < data.Width; x++)
-        {
-            var color = data[x, y];
-            @out[x, y] = color.Lum().GS();
-        }
-    });
-
-    @out.Dump();
-}
-```
 
 ### lina
 To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than ant alternative I tried so I kept them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
