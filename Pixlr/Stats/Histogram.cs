@@ -11,9 +11,9 @@ namespace Pixlr.Stats
     {
         public enum InitializationMode
         {
-            None = 0,
-            Sequential = 1,
-            Parallel = 2,
+            None = 0,           // will default to parallel
+            Sequential = 1,     // better for small data sets
+            Parallel = 2,       // better for large data sets
         }
 
         private readonly Bucket[] buckets;
