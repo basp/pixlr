@@ -120,16 +120,15 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
 {
     var M = bmp.ToMatrix(c => c.Lum().Inv());
     var H = M.ToHistogram(nbuckets);
-
     var model = new PlotModel();
-    var series = new OxyPlot.Series.BarSeries
+    
+    model.Series.Add(new OxyPlot.Series.BarSeries
     {
         ItemsSource = Enumerable.Range(0, nbuckets)
             .Select(i => new BarItem(H[i].Count))
             .ToArray(),
-    };
-    
-    model.Series.Add(series);
+    });
+
     model.Axes.Add(new OxyPlot.Axes.CategoryAxis
     {
         Position = AxisPosition.Left,
@@ -140,6 +139,7 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     });
 
     var window = new Window();
+    
     var view = new PlotView
     {
         Width = window.Width,
