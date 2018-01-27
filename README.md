@@ -73,7 +73,7 @@ using (var data = bmp.Lock(ImageLockMode.ReadOnly))
 }
 ```
 
-This technique can be useful if you need to optimize **convolutions** (see below) since you're not mapping directly into the source (not a good thing when you rely on *neighboring* values). For even a little bit more efficiency we can even specify the `ImageLockMode` properties. In this case we obviously specify `ReadOnly` for the source and `WriteOnly` for the target bitmap.
+This technique can be useful if you need to optimize **convolutions** (see below) since you're not mapping directly into the source (not a good thing when you rely on *neighboring* values). For a little bit more efficiency we can even specify the `ImageLockMode` properties. In this case we obviously specify `ReadOnly` for the source and `WriteOnly` for the target bitmap.
 
 And yes, the nested `using` blocks are a bit *fugly* indeed.
 
