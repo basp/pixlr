@@ -26,7 +26,7 @@ namespace Pixlr.Stats
                 .OrderBy(b => b.LowerBound)
                 .ToArray();
 
-            // Force last bucket to have correct upper bound
+            // Steps usually don't add up exactly to max, just force it
             buckets[buckets.Length - 1].UpperBound = max;
 
             var hist = new Histogram(buckets);
