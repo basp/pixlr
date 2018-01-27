@@ -69,12 +69,16 @@ namespace Pixlr.Stats
         public void InitializeParallel(IEnumerable<double> data) =>
             Parallel.ForEach(
                 data,
-                v => this.GetBucketOf(v).ValueOrFailure().Count++);
+                v => this
+                    .GetBucketOf(v)
+                    .ValueOrFailure($"No bucket found for {v}").Count++);
 
         public void InitializeSequential(IEnumerable<double> data) =>
             Array.ForEach(
                 data.ToArray(),
-                v => this.GetBucketOf(v).ValueOrFailure().Count++);
+                v => this
+                    .GetBucketOf(v)
+                    .ValueOrFailure($"No bucket found for {v}").Count++);
 
         public Bucket this[int i]
         {
