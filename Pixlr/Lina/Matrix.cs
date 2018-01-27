@@ -62,6 +62,8 @@ namespace Pixlr.Lina
 
         public void At(int row, int col, T value) => this[row, col] = value;
 
+        public IEnumerable<T> Enumerate() => this.storage;
+
         public IEnumerable<Vector<T>> EnumerateRows()
         {
             for (var r = 0; r < this.RowCount; r++)

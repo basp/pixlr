@@ -7,9 +7,13 @@ namespace Pixlr
     using System.Linq;
     using System.Threading.Tasks;
     using Pixlr.Lina;
+    using Pixlr.Stats;
 
     public static class MatrixExtensions
     {
+        public static Histogram GetHistogram(this Matrix<double> self, int nbuckets) =>
+            Histogram.Create(self.Enumerate(), nbuckets);
+
         public static Bitmap ToBitmap<U>(this Matrix<U> self, Func<U, Color> f)
             where U : struct, IEquatable<U>, IFormattable
         {
