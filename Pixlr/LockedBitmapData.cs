@@ -149,7 +149,7 @@ namespace Pixlr
 
         void IDisposable.Dispose()
         {
-            Dispose(true);
+            this.Dispose(true);
         }
     }
 }
