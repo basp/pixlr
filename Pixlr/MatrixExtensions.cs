@@ -11,7 +11,7 @@ namespace Pixlr
 
     public static class MatrixExtensions
     {
-        public static Histogram GetHistogram(this Matrix<double> self, int nbuckets) =>
+        public static Histogram ToHistogram(this Matrix<double> self, int nbuckets) =>
             Histogram.Create(self.Enumerate(), nbuckets);
 
         public static Bitmap ToBitmap<U>(this Matrix<U> self, Func<U, Color> f)
