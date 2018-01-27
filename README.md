@@ -88,7 +88,7 @@ using(var bmp = (Bitmap)Bitmap.FromFile(@"some\path"))
     const size = 5;
     var M1 = bmp.ToMatrix(c => c.Lum());
     var w = 1.0 / (size * size);
-    var kernel = Matrix.Create(size, size, (r, c) => size);
+    var kernel = Matrix.Create(size, size, (r, c) => w);
     var conv = kernel.Convolution((s, u, v) => s + (u * v), (r, c) => 0.0);
     var M2 = conv.Same(M1);
     M2.ToBitmap(v => v.GS()).Dump();
