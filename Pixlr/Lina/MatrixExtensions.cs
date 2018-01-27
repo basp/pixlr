@@ -6,7 +6,7 @@ namespace Pixlr.Lina
     public static class MatrixExtensions
     {
         public static IEnumerable<V> FlatMap<U, V>(this Matrix<U> self, Func<U, V> f)
-            where U : struct, IEquatable<U>
+            where U : struct, IEquatable<U>, IFormattable
             => self.EnumerateColumns()
                 .SelectMany(u => u.Enumerate())
                 .Select(u => f(u));

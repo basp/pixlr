@@ -4,13 +4,9 @@ namespace Pixlr.Lina
 
     internal class ConvolutionStrategy1D
     {
-        public ConvolutionStrategy1D()
-        {
-        }
+        public int FromInclusive { get; set; }
 
-        public int StartInclusive { get; set; }
-
-        public int StopExclusive { get; set; }
+        public int ToExclusive { get; set; }
 
         public int TargetLength { get; set; }
     }

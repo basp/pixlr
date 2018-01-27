@@ -86,7 +86,7 @@ namespace Pixlr
         private const int BytesPerPixel = 3;
 
         public Matrix<U> ToMatrix<U>(Func<Color, U> f)
-            where U : struct, IEquatable<U>
+            where U : struct, IEquatable<U>, IFormattable
         {
             var m = Matrix.Create<U>(this.data.Height, this.data.Width);
             Parallel.For(0, this.data.Height, y =>

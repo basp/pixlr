@@ -12,11 +12,11 @@ namespace Pixlr.Lina
             => self.Enumerate().Sum();
 
         public static T Aggregate<T>(this Vector<T> self, Func<T, T, T> acc)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T>, IFormattable
             => self.Aggregate(default(T), acc);
 
         public static T Aggregate<T>(this Vector<T> self, T seed, Func<T, T, T> acc)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T>, IFormattable
             => self.Enumerate().Aggregate(seed, acc);
 
         // public static double Centroid<T>(

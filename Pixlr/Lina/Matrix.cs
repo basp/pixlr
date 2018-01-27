@@ -3,19 +3,20 @@ namespace Pixlr.Lina
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     public static class Matrix
     {
         public static Matrix<T> Create<T>(int rows, int cols, params T[] storage)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T>, IFormattable
             => new Matrix<T>(rows, cols, storage);
 
         public static Matrix<T> Create<T>(int rows, int cols)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T>, IFormattable
             => Create<T>(rows, cols, (r, c) => default(T));
 
         public static Matrix<T> Create<T>(int rows, int cols, Func<int, int, T> factory)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T>, IFormattable
             => new Matrix<T>(rows, cols, CreateValues(rows, cols, factory).ToArray());
 
         private static IEnumerable<T> CreateValues<T>(
@@ -34,7 +35,7 @@ namespace Pixlr.Lina
     }
 
     public class Matrix<T>
-        where T : struct, IEquatable<T>
+        where T : struct, IEquatable<T>, IFormattable
     {
         private readonly T[] storage;
         private int rows;
@@ -89,19 +90,19 @@ namespace Pixlr.Lina
 
         public void MapInPlace(Func<T, T> f)
         {
-            for (var r = 0; r < this.rows; r++)
+            Parallel.For(0, this.rows, r =>
             {
                 for (var c = 0; c < this.cols; c++)
                 {
                     this.At(r, c, f(this.At(r, c)));
                 }
-            }
+            });
         }
 
         public IConvolution2D<U> Convolution<U>(
             Accumulator<U, T> acc,
             Func<int, int, U> factory)
-            where U : struct, IEquatable<U>
+            where U : struct, IEquatable<U>, IFormattable
         {
             this.ValidateKernel();
             return new Convolution2D<U, T>(this, acc, factory);

@@ -3,7 +3,7 @@ namespace Pixlr.Lina
     using System;
 
     public class VectorBuilder<T>
-        where T : struct, IEquatable<T>
+        where T : struct, IEquatable<T>, IFormattable
     {
         public Vector<T> Dense(VectorStorage<T> storage) =>
             new Vector<T>(storage);

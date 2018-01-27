@@ -5,7 +5,7 @@ namespace Pixlr.Lina
     using System.Linq;
 
     public abstract class VectorStorage<T>
-        where T : struct, IEquatable<T>
+        where T : struct, IEquatable<T>, IFormattable
     {
         public readonly int Length;
 

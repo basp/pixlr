@@ -1,10 +1,11 @@
 namespace Pixlr.Lina
 {
     using System;
+    using System.Threading.Tasks;
 
     internal class Convolution2D<U, V> : IConvolution2D<U>
-        where U : struct, IEquatable<U>
-        where V : struct, IEquatable<V>
+        where U : struct, IEquatable<U>, IFormattable
+        where V : struct, IEquatable<V>, IFormattable
     {
         private readonly Matrix<V> v;   // kernel   
         private readonly Vector<int> vc;
@@ -26,12 +27,12 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy2D
             {
-                StartInclusive = this.vc,
-                
-                StopExclusive = Vector.Build<int>().Dense(
+                FromInclusive = this.vc,
+
+                ToExclusive = Vector.Build<int>().Dense(
                     u.RowCount - this.vc[0],
                     u.ColumnCount - this.vc[1]),
-                
+
                 TargetSize = Vector.Build<int>().Dense(
                     u.RowCount - 2 * this.vc[0],
                     u.ColumnCount - 2 * this.vc[1]),
@@ -44,12 +45,12 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy2D
             {
-                StartInclusive = Vector.Build<int>().Dense(0, 0),
-                
-                StopExclusive = Vector.Build<int>().Dense(
+                FromInclusive = Vector.Build<int>().Dense(0, 0),
+
+                ToExclusive = Vector.Build<int>().Dense(
                     u.RowCount,
                     u.ColumnCount),
-                
+
                 TargetSize = Vector.Build<int>().Dense(
                     u.RowCount,
                     u.ColumnCount),
@@ -62,11 +63,11 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy2D
             {
-                StartInclusive = Vector.Build<int>().Dense(
+                FromInclusive = Vector.Build<int>().Dense(
                     -this.vc[0],
                     -this.vc[1]),
 
-                StopExclusive = Vector.Build<int>().Dense(
+                ToExclusive = Vector.Build<int>().Dense(
                     u.RowCount + this.vc[0],
                     u.ColumnCount + this.vc[1]),
 
@@ -107,15 +108,15 @@ namespace Pixlr.Lina
                 strat.TargetSize[1],
                 (r, c) => default(U));
 
-            for (var r = strat.StartInclusive[0]; r < strat.StopExclusive[0]; r++)
+            Parallel.For(strat.FromInclusive[0], strat.ToExclusive[0], r =>
             {
-                for (var c = strat.StartInclusive[1]; c < strat.StopExclusive[1]; c++)
+                for (var c = strat.FromInclusive[1]; c < strat.ToExclusive[1]; c++)
                 {
                     var s = this.Accumulate(r, c, u);
-                    w[r - strat.StartInclusive[0], c - strat.StartInclusive[1]] = s;
+                    w[r - strat.FromInclusive[0], c - strat.FromInclusive[1]] = s;
                 }
-            }
-            
+            });
+
             return w;
         }
     }

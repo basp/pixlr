@@ -3,7 +3,7 @@ namespace Pixlr.Lina
     using System;
 
     public class SparseVectorStorage<T> : VectorStorage<T>
-        where T : struct, IEquatable<T>
+        where T : struct, IEquatable<T>, IFormattable
     {
         private static readonly T Zero = default(T);
 

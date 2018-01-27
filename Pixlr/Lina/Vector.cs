@@ -8,15 +8,18 @@
     public static class Vector
     {
         public static VectorBuilder<T> Build<T>()
-            where T : struct, IEquatable<T> => new VectorBuilder<T>();
+            where T : struct, IEquatable<T>, IFormattable
+            => new VectorBuilder<T>();
 
         private static IEnumerable<T> CreateValues<T>(
             int count,
-            Func<int, T> factory) where T : struct =>
-                Enumerable.Range(0, count).Select(factory);
+            Func<int, T> factory)
+            where T : struct, IEquatable<T>, IFormattable
+            => Enumerable.Range(0, count).Select(factory);
     }
 
-    public class Vector<T> where T : struct, IEquatable<T>
+    public class Vector<T>
+        where T : struct, IEquatable<T>, IFormattable
     {
         private readonly VectorStorage<T> storage;
 
@@ -49,7 +52,7 @@
         public IConvolution1D<U> Convolution<U>(
             Accumulator<U, T> acc,
             Func<int, U> factory)
-            where U : struct, IEquatable<U>
+            where U : struct, IEquatable<U>, IFormattable
         {
             this.ValidateKernel();
             return new Convolution1D<U, T>(this, acc, factory);
@@ -68,7 +71,7 @@
         {
             var s = new StringBuilder();
             s.Append("(");
-            for(var i = 0; i < this.Length - 1; i++)
+            for (var i = 0; i < this.Length - 1; i++)
             {
                 s.Append(this.At(i));
                 s.Append(" ");

@@ -10,7 +10,7 @@ namespace Pixlr
     public static class MatrixExtensions
     {
         public static Bitmap ToBitmap<U>(this Matrix<U> self, Func<U, Color> f)
-            where U : struct, IEquatable<U>
+            where U : struct, IEquatable<U>, IFormattable
         {
             var bmp = new Bitmap(self.ColumnCount, self.RowCount);
             using (var data = bmp.Lock())

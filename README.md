@@ -68,4 +68,5 @@ And yes, the nested `using` blocks are a bit *fugly* indeed.
 To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` classes but in the end it turned out that they were faster than any alternative I tried... So I decided to keep them. They are pretty bare but versatile. However, they eat up a lot of memory (due to being dense by nature) so use them if you want or otherwise just use `MapInPlace` instead.
 
 ### convolutions
-TODO
+If you know a bit about how **shaders** work then you know also how convolutions work in **pixlr**. Basically, you take one matrix as an input and map another matrix (the *kernel*) over it and produce a new value for every element in the original matrix. One of the easiest examples is a *blur* filter:
+

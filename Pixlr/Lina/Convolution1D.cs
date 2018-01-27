@@ -1,10 +1,11 @@
 namespace Pixlr.Lina
 {
     using System;
+    using System.Threading.Tasks;
 
     internal class Convolution1D<U, V> : IConvolution1D<U>
-        where U : struct, IEquatable<U>
-        where V : struct, IEquatable<V>
+        where U : struct, IEquatable<U>, IFormattable
+        where V : struct, IEquatable<V>, IFormattable
     {
         private readonly Vector<V> v;   // weights (should have odd number of elements)
         private readonly int vc;        // v center index (e.g. 2 in a `v` of length 5)
@@ -26,8 +27,8 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy1D
             {
-                StartInclusive = this.vc,
-                StopExclusive = u.Length - this.vc,
+                FromInclusive = this.vc,
+                ToExclusive = u.Length - this.vc,
                 TargetLength = u.Length - 2 * this.vc,
             };
 
@@ -38,8 +39,8 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy1D
             {
-                StartInclusive = 0,
-                StopExclusive = u.Length,
+                FromInclusive = 0,
+                ToExclusive = u.Length,
                 TargetLength = u.Length,
             };
 
@@ -50,8 +51,8 @@ namespace Pixlr.Lina
         {
             var strat = new ConvolutionStrategy1D
             {
-                StartInclusive = -this.vc,
-                StopExclusive = u.Length + this.vc,
+                FromInclusive = -this.vc,
+                ToExclusive = u.Length + this.vc,
                 TargetLength = u.Length + 2 * this.vc,
             };
 
@@ -78,11 +79,11 @@ namespace Pixlr.Lina
         internal Vector<U> Convolve(Vector<U> u, ConvolutionStrategy1D strat)
         {
             var w = Vector.Build<U>().Dense(strat.TargetLength, _ => default(U));
-            for (var i = strat.StartInclusive; i < strat.StopExclusive; i++)
+            Parallel.For(strat.FromInclusive, strat.ToExclusive, i =>
             {
                 var s = this.Accumulate(i, u);
-                w[i - strat.StartInclusive] = s;
-            }
+                w[i - strat.FromInclusive] = s;
+            });
 
             return w;
         }
