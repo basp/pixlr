@@ -106,7 +106,7 @@ var hist = data.ToHistogram(100);
 You can create histograms from `IEnumerable<double>` but also from `Vector<double>` and `Matrix<double>` as well.
 
 ### plotting (bonus)
-Now with only the basic tools mentioned we can use **OxyPlot** to create some interesting plots. This is more about **OxyPlot** than it is about **Pixlr** but it's fun to go the final stretch. Let's visualize a histogram of any bitmap.
+Now with only the basic tools mentioned we can use **OxyPlot** to create some interesting plots. This is more about **OxyPlot** than it is about **Pixlr** but it's fun to go the final stretch. Let's visualize a **luminosity** histogram of **any bitmap** (assuming it will fit into memory).
 
 Using **Pixlr** and **OxyPlot** we need to do a two things:
 * Create a histogram from our bitmap using **Pixlr**
