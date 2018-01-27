@@ -19,6 +19,7 @@ namespace Pixlr.Lina
             where T : struct, IEquatable<T>, IFormattable
             => self.Enumerate().Aggregate(seed, acc);
 
+        // TODO
         // public static double Centroid<T>(
         //     this Vector<T> self, 
         //     Func<T, int, T> sel,
@@ -28,6 +29,8 @@ namespace Pixlr.Lina
         //     var t = self.Enumerate().Select(sel).Aggregate(agg);
         // }
 
+
+        // TODO: fixme
         public static double Centroid(this Vector<int> self)
         {
             var t = self.Enumerate().Select((x, i) => (i + 1) * x).Sum();
@@ -35,6 +38,7 @@ namespace Pixlr.Lina
             return s > 0 ? (t / s) - 1 : 0;
         }
 
+        // TODO: fixme
         public static double Centroid(this Vector<double> self)
         {
             var t = self.Enumerate().Select((x, i) => (i + 1) * x).Sum();
