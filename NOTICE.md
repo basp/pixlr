@@ -1,4 +1,4 @@
-Parts of the Pixlr API are heavily inspired by MathNet.Numerics and
+Parts of the Pixlr API are heavily inspired by **MathNet.Numerics** and
 some parts of the matrix and vector storage code are re-used. This applies to the following files:
 
 * Lina\Matrix.cs
@@ -15,7 +15,7 @@ The API of the following classes is heavily inspired by equivalent classes in Ma
 * Stats\Histogram.cs
 * Stats\Bucket.cs
 
-Any code from the MathNet.Numerics project that was re-used int he files mentioned above is licensed under the following terms:
+Any code from the **MathNet.Numerics** project that was re-used in the files mentioned above is licensed under the following terms:
 
 Copyright (c) 2002-2018 Math.NET
 
