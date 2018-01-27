@@ -29,7 +29,6 @@ namespace Pixlr.Lina
         //     var t = self.Enumerate().Select(sel).Aggregate(agg);
         // }
 
-
         // TODO: fixme
         public static double Centroid(this Vector<int> self)
         {
