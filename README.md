@@ -151,4 +151,5 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     window.Dump();
 }
 ```
-<blockquote class="imgur-embed-pub" lang="en" data-id="g1vCaQ8">
+
+![alt text](https://i.imgur.com/g1vCaQ8.png)
