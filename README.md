@@ -1,5 +1,5 @@
 ## pixlr
-Fast bitmap operations.
+Fast robust bitmap operations.
 
 ### why
 The whole reason why this thing exists is because I wanted to do operations on bitmaps that might involve matrices and vectors as well. And as I like to do things interactively I wanted to make the API simple and functionally flavored without making too much compromises on speed.
