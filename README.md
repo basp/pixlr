@@ -111,7 +111,7 @@ Now with only the basic tools mentioned we can use **OxyPlot** to create some in
 
 Using **Pixlr** and **OxyPlot** we need to do a two things:
 * Create a histogram from our bitmap using **Pixlr**
-* Visualizae the histogram using **Oxyplot**
+* Visualize the histogram using **Oxyplot**
 
 This is quite easy to do, the only thing you need to keep in mind that you need to assign a `Width` and `Height` to the `PlotView` instance otherwise it will probably not show up properly.
 ```
