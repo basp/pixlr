@@ -90,14 +90,14 @@ namespace Pixlr.Stats
 
         public int BucketCount => this.buckets.Length;
 
-        private static bool ValueInRange(double v, Bucket bucket) =>
+        private static bool ValueInBucket(double v, Bucket bucket) =>
             v >= bucket.LowerBound && v <= bucket.UpperBound;
 
         public Option<Bucket> GetBucketOf(double value)
         {
             for (var i = 0; i < this.BucketCount; i++)
             {
-                if (ValueInRange(value, this[i]))
+                if (ValueInBucket(value, this[i]))
                 {
                     return Option.Some(this[i]);
                 }
@@ -110,7 +110,7 @@ namespace Pixlr.Stats
         {
             for (var i = 0; i < this.BucketCount; i++)
             {
-                if (ValueInRange(value, this[i]))
+                if (ValueInBucket(value, this[i]))
                 {
                     return Option.Some(i);
                 }
