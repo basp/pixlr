@@ -120,8 +120,8 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
 {
     var M = bmp.ToMatrix(c => c.Lum().Inv());
     var H = M.ToHistogram(nbuckets);
-    var model = new PlotModel();
     
+    var model = new PlotModel();
     model.Series.Add(new OxyPlot.Series.BarSeries
     {
         ItemsSource = Enumerable.Range(0, nbuckets)
@@ -139,7 +139,6 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     });
 
     var window = new Window();
-    
     var view = new PlotView
     {
         Width = window.Width,
