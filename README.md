@@ -48,7 +48,7 @@ As you can see from the above example, we have some defaults for `ToMatrix` and 
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
 ```
-using (var bmp = (Bitmap)Bitmap.FromFile(path))
+using (var bmp = path.LoadAsBitmap())
 using (var data = bmp.Lock())
 {
     data.MapInPlace(f => f.Lum().GS());
@@ -65,7 +65,7 @@ Note that you can also `MapInPlace` on matrices as well.
 ### just enumerating
 Below is an example of just raw looping over the pixels and copying the result into another `LockedBitmapData` instance (so not to interfere with the original sampling).
 ```
-using (var bmp = (Bitmap)Bitmap.FromFile(path))
+using (var bmp = path.LoadAsBitmap())
 using (var data = bmp.Lock(ImageLockMode.ReadOnly))
 {
     using (var @out = new Bitmap(data.Width, data.Height))
@@ -96,7 +96,7 @@ To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` cl
 ### convolutions
 If you know a bit about how **shaders** work then you know also how convolutions work in **pixlr**. Basically, you take one matrix as an input and map another matrix (the *kernel*) over it and produce a new value for every element in the original matrix. One of the easiest examples is a *blur* filter.
 ```
-using(var bmp = (Bitmap)Bitmap.FromFile(@"some\path"))
+using(var bmp = @"some\path".LoadAsBitmap())
 {
     const size = 5;
     var M1 = bmp.ToMatrix(c => c.Lum());
