@@ -114,7 +114,7 @@ Using **Pixlr** and **OxyPlot** we need to do a two things:
 
 This is quite easy to do, the only thing you need to keep in mind that you need to assign a `Width` and `Height` to the `PlotView` instance otherwise it will probably not show up properly.
 ```
-const int nbuckets = 16;
+const int nbuckets = 32;
 const string path = @"path\to\bitmap";
 const int digits = 3;
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
@@ -151,3 +151,5 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     window.Dump();
 }
 ```
+
+![a typical histogram](https://imgur.com/g1vCaQ8)
