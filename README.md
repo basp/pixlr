@@ -21,6 +21,17 @@ There's a few things that are important to note about the above code:
 * Although working with matrices is *very* nice, this will potentially consume **a lot of memory**. Eventually, there's the original bitmap, the matri(x)(ces) (of equal size to the bitmap dimensions) that have (probably **64-bit**) doubles and also the result bitmap (again, sized to the original bitmap) that have to reside in memory all at the same time for at least a short while (i.e. it's not inconceivable that you run into an `OutOfMemoryException` when casually working with large images and matrices).
 * It's quite fast.
 
+### matrix from bitmap direct
+We can also create a matrix from a bitmap directly:
+```
+using(var bmp = (Bitmap)Bitmap.FromFile(path))
+{
+    var M = bmp.ToMatrix(c => c.Lum());
+}
+```
+
+This will allow you to bypass the whole `Lock` thing completely. The `ToMatrix` will lock the bitmap in `ReadOnly` mode while it assembles the matrix. That matrix will be a seperate chunk of memory from your bitmap. This does mean that this operation consumes a lot of memory for a fraction of a second.
+
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
 ```
