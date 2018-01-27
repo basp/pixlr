@@ -32,6 +32,19 @@ using(var bmp = (Bitmap)Bitmap.FromFile(path))
 
 This will allow you to bypass the whole `Lock` thing completely. The `ToMatrix` method will lock the bitmap in `ReadOnly` mode while it assembles the matrix. 
 
+### sensible defaults
+Loading a bitmap is pretty horrible. We have to cast it even so that's not nice. To *fix* this, **Pixlr** includes the `LoadAsBitmap` method on `string` values:
+```
+const string path = @"path\to\bmp";
+using(var bmp = path.LoadAsBitmap())
+{
+    var M = bmp.ToMatrix();
+    M.ToBitmap().Dump();
+}
+```
+
+As you can see from the above example, we have some defaults for `ToMatrix` and `ToBitmap` in place. The default behavior for `ToMatrix` is to assume RGB pixels and convert hem to a luminosity value. The default behavior for `ToBitmap` is to convert a luminosity value back to a grayscale RGB value.
+
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
 ```
