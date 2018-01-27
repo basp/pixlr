@@ -30,7 +30,7 @@ using(var bmp = (Bitmap)Bitmap.FromFile(path))
 }
 ```
 
-This will allow you to bypass the whole `Lock` thing completely. The `ToMatrix` will lock the bitmap in `ReadOnly` mode while it assembles the matrix. 
+This will allow you to bypass the whole `Lock` thing completely. The `ToMatrix` method will lock the bitmap in `ReadOnly` mode while it assembles the matrix. 
 
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
