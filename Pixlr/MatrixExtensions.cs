@@ -3,6 +3,7 @@ namespace Pixlr
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Drawing.Imaging;
     using System.Linq;
     using System.Threading.Tasks;
     using Pixlr.Lina;
@@ -13,7 +14,7 @@ namespace Pixlr
             where U : struct, IEquatable<U>, IFormattable
         {
             var bmp = new Bitmap(self.ColumnCount, self.RowCount);
-            using (var data = bmp.Lock())
+            using (var data = bmp.Lock(ImageLockMode.WriteOnly))
             {
                 Parallel.For(0, self.RowCount, y =>
                 {

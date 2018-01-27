@@ -2,17 +2,17 @@ namespace Pixlr.Stats
 {
     public class Bucket
     {
-        public Bucket(int count, double lowerBound, double upperBound)
+        public Bucket(double lowerBound, double upperBound)
         {
-            this.Count = count;
+            this.Count = 0;
             this.LowerBound = lowerBound;
             this.UpperBound = upperBound;
         }
 
-        public int Count { get; private set; }
+        public int Count { get; internal set; }
 
-        public double LowerBound { get; private set; }
+        public double LowerBound { get; internal set; }
 
-        public double UpperBound { get; private set; }
+        public double UpperBound { get; internal set; }
     }
 }
