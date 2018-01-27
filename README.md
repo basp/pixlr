@@ -116,6 +116,7 @@ This is quite easy to do, the only thing you need to keep in mind that you need 
 ```
 const int nbuckets = 16;
 const string path = @"path\to\bitmap";
+const int digits = 3;
 using (var bmp = (Bitmap)Bitmap.FromFile(path))
 {
     var M = bmp.ToMatrix(c => c.Lum().Inv());
@@ -134,7 +135,7 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
         Position = AxisPosition.Left,
         Key = "Bucket",
         ItemsSource = Enumerable.Range(0, nbuckets)
-            .Select(i => $"{Math.Round(H[i].LowerBound, 3)} - {Math.Round(H[i].UpperBound, 3)}")
+            .Select(i => $"{Math.Round(H[i].LowerBound, digits)} - {Math.Round(H[i].UpperBound, digits)}")
             .ToArray(),
     });
 
