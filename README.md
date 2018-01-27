@@ -151,5 +151,4 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     window.Dump();
 }
 ```
-
-![a typical histogram](https://imgur.com/g1vCaQ8)
+<blockquote class="imgur-embed-pub" lang="en" data-id="g1vCaQ8">
