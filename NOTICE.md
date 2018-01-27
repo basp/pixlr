@@ -10,7 +10,7 @@ some parts of the matrix and vector storage code are re-used. This applies to th
 * `Lina\DenseVectorStorage.cs`
 * `Lina\SparseVectorStorage.cs`
 
-The API of the following classes is heavily inspired by equivalent classes in MathNet.Numerics. However, the implementation is completely from scratch:
+The API of the following classes is heavily inspired by equivalent classes in **MathNet.Numerics**. However, the **implementation** is *completely* from scratch:
 
 * `Stats\Histogram.cs`
 * `Stats\Bucket.cs`
