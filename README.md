@@ -48,8 +48,7 @@ As you can see from the above example, we have some defaults for `ToMatrix` and 
 ### mapping in place
 If converting to and from matrices is too slow or too memory consuming, you can also *map in place* directly into the bitmap memory.
 ```
-using (var bmp = path.LoadAsBitmap())
-using (var data = bmp.Lock())
+using (var data = path.LoadAsBitmap().Lock())
 {
     data.MapInPlace(f => f.Lum().GS());
     bmp.Dump();
