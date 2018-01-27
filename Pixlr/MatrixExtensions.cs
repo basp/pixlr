@@ -14,6 +14,9 @@ namespace Pixlr
         public static Histogram ToHistogram(this Matrix<double> self, int nbuckets) =>
             Histogram.Create(self.Enumerate(), nbuckets);
 
+        public static Bitmap ToBitmap(this Matrix<double> self) =>
+            self.ToBitmap(v => v.GS());
+
         public static Bitmap ToBitmap<U>(this Matrix<U> self, Func<U, Color> f)
             where U : struct, IEquatable<U>, IFormattable
         {

@@ -20,6 +20,9 @@
             PixelFormat fmt = PixelFormat.Format24bppRgb) =>
                 LockedBitmapData.Create(self, rect);
 
+        public static Matrix<double> ToMatrix(this Bitmap self) =>
+            self.ToMatrix(c => c.Lum());
+
         public static Matrix<U> ToMatrix<U>(this Bitmap self, Func<Color, U> f)
             where U : struct, IEquatable<U>, IFormattable
         {
