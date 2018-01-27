@@ -104,3 +104,52 @@ var hist = data.ToHistogram(100);
 ```
 
 You can create histograms from `IEnumerable<double>` but also from `Vector<double>` and `Matrix<double>` as well.
+
+### plotting (bonus)
+Now with only the basic tools mentioned we can use **OxyPlot** to create some interesting plots. This is more about **OxyPlot** than it is about **Pixlr** but it's fun to go the final stretch. Let's visualize a histogram of any bitmap.
+
+Using **Pixlr** and **OxyPlot** we need to do a two things:
+* Create a histogram from our bitmap using **Pixlr**
+* Visualizae the histogram using **Oxyplot**
+
+This is quite easy to do, the only thing you need to keep in mind that you need to assign a `Width` and `Height` to the `PlotView` instance otherwise it will probably not show up properly.
+```
+const int nbuckets = 16;
+const string path = @"path\to\bitmap";
+using (var bmp = (Bitmap)Bitmap.FromFile(path))
+{
+    var M = bmp.ToMatrix(c => c.Lum().Inv());
+    var H = M.ToHistogram(nbuckets);
+    Enumerable.Range(0, nbuckets).Select(i => H[i]);
+    
+    var model = new PlotModel();
+    var series = new OxyPlot.Series.BarSeries
+    {
+        ItemsSource = Enumerable.Range(0, nbuckets)
+            .Select(i => new BarItem(H[i].Count))
+            .ToArray(),
+    };
+    
+    model.Series.Add(series);
+    
+    model.Axes.Add(new OxyPlot.Axes.CategoryAxis
+    {
+        Position = AxisPosition.Left,
+        Key = "Bucket",
+        ItemsSource = Enumerable.Range(0, nbuckets)
+            .Select(i => $"{Math.Round(H[i].LowerBound, 3)} - {Math.Round(H[i].UpperBound, 3)}")
+            .ToArray(),
+    });
+
+    var window = new Window();
+    var view = new PlotView
+    {
+        Width = window.Width,
+        Height = window.Height,
+        Model = model,
+    };
+    
+    window.Content = view;
+    window.Dump();
+}
+```
