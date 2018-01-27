@@ -4,6 +4,8 @@ namespace Pixlr.Stats
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Optional;
+    using Optional.Unsafe;
 
     public class Histogram
     {
@@ -42,9 +44,12 @@ namespace Pixlr.Stats
             int nbuckets,
             InitializationMode mode = InitializationMode.Parallel)
         {
+            data = data.ToArray();
+
             var min = data.Min();
             var max = data.Max();
             var hist = Create(min, max, nbuckets);
+
             switch (mode)
             {
                 case InitializationMode.Sequential:
@@ -62,10 +67,14 @@ namespace Pixlr.Stats
         }
 
         public void InitializeParallel(IEnumerable<double> data) =>
-            Parallel.ForEach(data, v => this.GetBucketOf(v).Count++);
+            Parallel.ForEach(
+                data,
+                v => this.GetBucketOf(v).ValueOrFailure().Count++);
 
         public void InitializeSequential(IEnumerable<double> data) =>
-            Array.ForEach(data.ToArray(), v => this.GetBucketOf(v).Count++);
+            Array.ForEach(
+                data.ToArray(),
+                v => this.GetBucketOf(v).ValueOrFailure().Count++);
 
         public Bucket this[int i]
         {
@@ -77,30 +86,30 @@ namespace Pixlr.Stats
         private static bool ValueInRange(double v, Bucket bucket) =>
             v >= bucket.LowerBound && v <= bucket.UpperBound;
 
-        public Bucket GetBucketOf(double value)
+        public Option<Bucket> GetBucketOf(double value)
         {
             for (var i = 0; i < this.BucketCount; i++)
             {
                 if (ValueInRange(value, this[i]))
                 {
-                    return this[i];
+                    return Option.Some(this[i]);
                 }
             }
 
-            return null;
+            return Option.None<Bucket>();
         }
 
-        public int GetBucketIndexOf(double value)
+        public Option<int> GetBucketIndexOf(double value)
         {
             for (var i = 0; i < this.BucketCount; i++)
             {
                 if (ValueInRange(value, this[i]))
                 {
-                    return i;
+                    return Option.Some(i);
                 }
             }
 
-            return -1;
+            return Option.None<int>();
         }
     }
 }
