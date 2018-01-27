@@ -71,3 +71,10 @@ To be honest, I didn't really wanna create my own `Vector<T>` and `Matrix<T>` cl
 If you know a bit about how **shaders** work then you know also how convolutions work in **pixlr**. Basically, you take one matrix as an input and map another matrix (the *kernel*) over it and produce a new value for every element in the original matrix. One of the easiest examples is a *blur* filter.
 
 TODO
+
+### histograms
+**Pixlr** includes a histograms out of the box. If you're dealing with a sequence of `double` values, you'll most likely have access to a `ToHistogram` method as well.
+```
+var V = Vector.Build<double>().Dense(new [] { 0.2, 0.4, 0.1, 0.8, 0. 3 });
+var H = V.ToHistogram();
+```
