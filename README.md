@@ -133,7 +133,7 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
     model.Axes.Add(new OxyPlot.Axes.CategoryAxis
     {
         Position = AxisPosition.Left,
-        Key = "Bucket",
+        Key = "Lum",
         ItemsSource = Enumerable.Range(0, nbuckets)
             .Select(i => $"{Math.Round(H[i].LowerBound, digits)} - {Math.Round(H[i].UpperBound, digits)}")
             .ToArray(),
