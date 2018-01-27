@@ -98,9 +98,10 @@ using(var bmp = (Bitmap)Bitmap.FromFile(@"some\path"))
 ### histograms
 **Pixlr** includes a histograms out of the box. If you're dealing with a sequence of `double` values, you'll most likely have access to a `ToHistogram` method as well.
 ```
+const int nbuckets = 100;
 var rng = new Random(1);
 var data = Enumerable.Range(0, 10000).Select(_ => rng.NextDouble());
-var hist = data.ToHistogram(100);
+var hist = data.ToHistogram(nbuckets);
 ```
 
 You can create histograms from `IEnumerable<double>` but also from `Vector<double>` and `Matrix<double>` as well.
