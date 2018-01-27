@@ -69,14 +69,14 @@ namespace Pixlr.Stats
         private static string NoBucketForMsg(double value) =>
             $"No bucket found for {value}";
 
-        public void InitializeParallel(IEnumerable<double> data) =>
+        private void InitializeParallel(IEnumerable<double> data) =>
             Parallel.ForEach(
                 data,
                 v => this
                     .GetBucketOf(v)
                     .ValueOrFailure(NoBucketForMsg(v)).Count++);
 
-        public void InitializeSequential(IEnumerable<double> data) =>
+        private void InitializeSequential(IEnumerable<double> data) =>
             Array.ForEach(
                 data.ToArray(),
                 v => this
