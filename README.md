@@ -152,4 +152,5 @@ using (var bmp = (Bitmap)Bitmap.FromFile(path))
 }
 ```
 
+#### Example output
 ![alt text](https://i.imgur.com/g1vCaQ8.png)
