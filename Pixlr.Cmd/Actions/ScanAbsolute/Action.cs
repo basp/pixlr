@@ -1,0 +1,4 @@
+namespace Pixlr.Actions.ScanAbsolute
+{
+    
+}
