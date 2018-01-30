@@ -1,4 +1,7 @@
-namespace Pixlr.Actions.ScanRelative
+namespace Pixlr.Cmd.Actions.ScanRelative
 {
-    
+    public class Request : Scan.Request
+    {
+
+    }
 }

@@ -5,7 +5,12 @@ namespace Pixlr.Cmd.Actions.Scan
 
     public class Response
     {
-        public IEnumerable<string> Matches { get; set; }
+        public Response(IEnumerable<string> matches)
+        {
+            this.Matches = matches;
+        }
+
+        public virtual IEnumerable<string> Matches { get; }
 
         public override string ToString() =>
             string.Join(Environment.NewLine, Matches);

@@ -10,11 +10,21 @@
         public static bool Help { get; set; }
 
         [ArgActionMethod]
-        public static void Scan(Actions.Scan.Request req)
+        [ArgDescription("Scan relatively")]
+        public static void Scanr(Actions.Scan.Request req)
         {
-            var act = new Actions.Scan.Action();
+            var act = new Actions.ScanRelative.Action();
             var res = act.Execute(req);
-            Console.WriteLine(res.ToString());
+            Console.WriteLine(res);
+        }
+
+        [ArgActionMethod]
+        [ArgDescription("Scan absolutely")]
+        public static void Scana(Actions.Scan.Request req)
+        {
+            var act = new Actions.ScanAbsolute.Action();
+            var res = act.Execute(req);
+            Console.WriteLine(res);
         }
 
         static void Main(string[] args)

@@ -6,14 +6,12 @@ namespace Pixlr.Cmd.Actions.Scan
     using System.Text.RegularExpressions;
     using Flurl.Http;
 
-    public class Action
+    public class Action : IAction<Request, Response>
     {
         public Response Execute(Request args)
         {
-            return new Response
-            {
-                Matches = Scan(args.Url, args.Tag, args.Attr, args.Value),
-            };
+            var matches = Scan(args.Url, args.Tag, args.Attr, args.Value);
+            return new Response(matches);
         }
 
         private static IEnumerable<string> Scan(
