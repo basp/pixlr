@@ -1,7 +1,6 @@
-namespace Pixlr.Cmd.Actions.ScanAbsolute
+namespace Pixlr.Cmd.Actions.Download
 {
     public class Request : Scan.Request
     {
-
     }
 }
