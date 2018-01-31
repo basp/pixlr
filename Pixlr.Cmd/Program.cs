@@ -10,6 +10,18 @@
         public static bool Help { get; set; }
 
         [ArgActionMethod]
+        [ArgDescription("Download matches")]
+        public static void Download(Actions.Download.Request req)
+        {
+            var act = new Actions.Download.Action(
+                new Actions.ScanRelative.Action(),
+                path => Console.Write("."));
+                
+            var res = act.Execute(req);
+            Console.WriteLine(res);
+        }
+
+        [ArgActionMethod]
         [ArgDescription("Scan relatively")]
         public static void Scanr(Actions.Scan.Request req)
         {

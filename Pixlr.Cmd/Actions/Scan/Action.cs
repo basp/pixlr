@@ -10,7 +10,7 @@ namespace Pixlr.Cmd.Actions.Scan
     {
         public Response Execute(Request args)
         {
-            var matches = Scan(args.Url, args.Tag, args.Attr, args.Value);
+            var matches = Scan(args.Url, args.Tag, args.Attr, args.Pattern);
             return new Response(matches);
         }
 
@@ -18,10 +18,10 @@ namespace Pixlr.Cmd.Actions.Scan
             string url,
             string tag,
             string attr,
-            string value)
+            string pattern)
         {
             var html = url.GetStringAsync().Result;
-            var pattern = $@"<{tag}.*{attr}=""({value})""";
+            pattern = $@"<{tag}.*{attr}=""({pattern})""";
             var matches = Regex.Matches(html, pattern);
             return AsEnumerable(matches).Select(x => x.Groups[1].Value);
         }
