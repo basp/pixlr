@@ -5,6 +5,12 @@ namespace Pixlr.Cmd.Actions.Download
     using System.Collections.Concurrent;
     using Flurl.Http;
 
+    public enum ScanMode
+    {
+        Relative = 1,
+        Absolute = 2,
+    }
+
     public class Action : IAction<Request, Response>
     {
         private readonly IAction<Scan.Request, Scan.Response> scan;
@@ -34,7 +40,7 @@ namespace Pixlr.Cmd.Actions.Download
                 this.onProgress(path);
             }
 
-            return new Response { DownloadedFiles = files };
+            return new Response { Files = files };
         }
 
         private IEnumerable<string> Scan(Request request) =>

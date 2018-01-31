@@ -6,9 +6,9 @@ namespace Pixlr.Cmd.Actions.Download
 
     public class Response
     {
-        public IEnumerable<string> DownloadedFiles { get; set; }
+        public IEnumerable<string> Files { get; set; }
 
         public override string ToString() =>
-            string.Join(Environment.NewLine, this.DownloadedFiles);
+            string.Join(Environment.NewLine, this.Files);
     }
 }

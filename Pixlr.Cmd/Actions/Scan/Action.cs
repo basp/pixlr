@@ -23,8 +23,14 @@ namespace Pixlr.Cmd.Actions.Scan
             var html = url.GetStringAsync().Result;
             pattern = $@"<{tag}.*{attr}=""({pattern})""";
             var matches = Regex.Matches(html, pattern);
-            return AsEnumerable(matches).Select(x => x.Groups[1].Value);
+            return AsEnumerable(matches)
+                .Select(x => GetAbsoluteUrl(url, x.Groups[1].Value));
         }
+
+        private static string GetAbsoluteUrl(string baseUrl, string imgUrl) =>
+            Uri.IsWellFormedUriString(imgUrl, UriKind.Absolute)
+                ? imgUrl
+                : $"{baseUrl}{imgUrl}";
 
         private static IEnumerable<Match> AsEnumerable(MatchCollection matches)
         {

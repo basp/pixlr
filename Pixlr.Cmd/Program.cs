@@ -14,32 +14,24 @@
         public static void Download(Actions.Download.Request req)
         {
             var act = new Actions.Download.Action(
-                new Actions.ScanRelative.Action(),
+                new Actions.Scan.Action(),
                 path => Console.Write("."));
-                
+
             var res = act.Execute(req);
+            Console.WriteLine();
             Console.WriteLine(res);
         }
 
         [ArgActionMethod]
-        [ArgDescription("Scan relatively")]
-        public static void Scanr(Actions.Scan.Request req)
+        [ArgDescription("Scan without downloading")]
+        public static void Scan(Actions.Scan.Request req)
         {
-            var act = new Actions.ScanRelative.Action();
+            var act = new Actions.Scan.Action();
             var res = act.Execute(req);
             Console.WriteLine(res);
         }
 
-        [ArgActionMethod]
-        [ArgDescription("Scan absolutely")]
-        public static void Scana(Actions.Scan.Request req)
-        {
-            var act = new Actions.ScanAbsolute.Action();
-            var res = act.Execute(req);
-            Console.WriteLine(res);
-        }
-
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Args.InvokeAction<Program>(args);
         }
