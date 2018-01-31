@@ -52,5 +52,16 @@ namespace Pixlr.Lina
 
             return Vector.Build<double>().Dense(row, col);
         }
+
+        public static Matrix<T> Crop<T>(
+            this Matrix<T> self,
+            int row,
+            int col,
+            int height,
+            int width)
+            where T : struct, IEquatable<T>, IFormattable
+        {
+            throw new NotImplementedException();
+        }
     }
 }
