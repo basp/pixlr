@@ -11,6 +11,12 @@ namespace Pixlr.Lina
                 .SelectMany(u => u.Enumerate())
                 .Select(u => f(u));
 
+        public static Vector<double> Mean(this Matrix<int> self) =>
+            self.EnumerateColumns().Select(x => x.Mean()).ToVector();
+
+        public static Vector<double> Mean(this Matrix<double> self) =>
+            self.EnumerateColumns().Select(x => x.Mean()).ToVector();
+
         public static Vector<double> Centroid(this Matrix<int> self)
         {
             var col = self.EnumerateColumns()

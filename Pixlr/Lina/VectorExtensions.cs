@@ -8,16 +8,22 @@ namespace Pixlr.Lina
         public static double Sum(this Vector<int> self)
             => self.Enumerate().Sum();
 
-        public static double Sum(this Vector<double> self)
-            => self.Enumerate().Sum();
+        public static double Sum(this Vector<double> self) => 
+            self.Enumerate().Sum();
+
+        public static double Mean(this Vector<int> self) => 
+            self.Sum() / self.Length;
+
+        public static double Mean(this Vector<double> self) => 
+            self.Sum() / self.Length;
 
         public static T Aggregate<T>(this Vector<T> self, Func<T, T, T> acc)
-            where T : struct, IEquatable<T>, IFormattable
-            => self.Aggregate(default(T), acc);
+            where T : struct, IEquatable<T>, IFormattable => 
+                self.Aggregate(default(T), acc);
 
         public static T Aggregate<T>(this Vector<T> self, T seed, Func<T, T, T> acc)
-            where T : struct, IEquatable<T>, IFormattable
-            => self.Enumerate().Aggregate(seed, acc);
+            where T : struct, IEquatable<T>, IFormattable => 
+                self.Enumerate().Aggregate(seed, acc);
 
         // TODO
         // public static double Centroid<T>(
@@ -29,7 +35,6 @@ namespace Pixlr.Lina
         //     var t = self.Enumerate().Select(sel).Aggregate(agg);
         // }
 
-        // TODO: fixme
         public static double Centroid(this Vector<int> self)
         {
             var t = self.Enumerate().Select((x, i) => (i + 1) * x).Sum();
@@ -37,7 +42,6 @@ namespace Pixlr.Lina
             return s > 0 ? (t / s) - 1 : 0;
         }
 
-        // TODO: fixme
         public static double Centroid(this Vector<double> self)
         {
             var t = self.Enumerate().Select((x, i) => (i + 1) * x).Sum();
