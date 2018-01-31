@@ -11,11 +11,17 @@ namespace Pixlr.Lina
                 .SelectMany(u => u.Enumerate())
                 .Select(u => f(u));
 
-        public static Vector<double> Mean(this Matrix<int> self) =>
+        public static Vector<double> MeanOfColumns(this Matrix<int> self) =>
             self.EnumerateColumns().Select(x => x.Mean()).ToVector();
 
-        public static Vector<double> Mean(this Matrix<double> self) =>
+        public static Vector<double> MeanOfColumns(this Matrix<double> self) =>
             self.EnumerateColumns().Select(x => x.Mean()).ToVector();
+
+        public static Vector<double> MeanOfRows(this Matrix<int> self) =>
+            self.EnumerateRows().Select(x => x.Mean()).ToVector();
+
+        public static Vector<double> MeanOfRows(this Matrix<double> self) =>
+            self.EnumerateRows().Select(x => x.Mean()).ToVector();
 
         public static Vector<double> Centroid(this Matrix<int> self)
         {
