@@ -9,10 +9,19 @@ namespace Pixlr.Stats
             this.UpperBound = upperBound;
         }
 
-        public int Count { get; internal set; }
+        public int Count
+        {
+            get; internal set;
+        }
 
-        public double LowerBound { get; internal set; }
+        public double LowerBound
+        {
+            get; internal set;
+        }
 
-        public double UpperBound { get; internal set; }
+        public double UpperBound
+        {
+            get; internal set;
+        }
     }
 }
