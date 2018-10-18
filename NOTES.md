@@ -11,7 +11,7 @@ Where the sum of the coefficients `a[1..n]` is `1`.
 
 Take for example two points `P1` and `P2` and the **affine combination**:
 ```
-P(t) = (1 - t)P1 + tP2`
+P(t) = (1 - t)P1 + tP2
 ```
 
 The above combination is what is commonly known as **linear interpolation**. Commonly known as the `lerp` function in code.
