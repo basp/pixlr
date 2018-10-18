@@ -5,7 +5,7 @@
 ### affine combination
 An **affine combination** is a linear combination of vectors `x[1]..x[n]`:
 ```
-a[i]*x[i] = a[1]x[1] + a[2]x[2] + ... + a[n]x[n]
+a*x = a[1]x[1] + a[2]x[2] + ... + a[n]x[n]
 ```
 Where the sum of the coefficients `a[1..n]` is `1`.
 
