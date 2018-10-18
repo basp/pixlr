@@ -51,10 +51,10 @@ The curve above is a **cubic** curve.
 
 You can rewrite the curve definition above in terms of vectors and matrices:
 ```
-                   |  1  0  0  0 |   | P1 |
-| 1, t, t2, t3 | * | -3  3  0  0 | * | P2 |
-                   |  3 -6  3  0 |   | P3 |
-                   | -1  3 -3  1 |   | P4 | 
+                   [  1  0  0  0 ]   [ P1 ]
+[ 1, t, t2, t3 ] * [ -3  3  0  0 ] * [ P2 ]
+                   [  3 -6  3  0 ]   [ P3 ]
+                   [ -1  3 -3  1 ]   [ P4 ] 
 ```
 
 The fact that we an rewrite our polynomials like this also means we can do the necessary calculations relatively fast.
@@ -68,9 +68,9 @@ The fact that we an rewrite our polynomials like this also means we can do the n
 Control points are also known as Chaikin's points or Bezier points. A straight up interpolating polynomial doesn't work because it creates weird curves where straight lines should be.
 
 ### chaikin's algorithm
-1. Take a set of points `P0 = {P0[0], .. P0[n]}`.
-2. Create a set of vectors `V` between those points where `V[i] = P[i + 1] - P[i]`. 
-3. Create a new set of points `P1` by creating two new points for each vector in `V` at `1/3*V` and `2/3*V` so that `P1[i] = 1/3*V` and `P1[i + 1] = 2/3V`.
+1. Take a set of points `P0 = {P0[1], .. P0[n]}` where `|P0| >= 3`.
+2. Create a set of vectors `V` between those points where `V[i] = P[i + 1] - P[i]` where `|V| = |P0| - 1`.
+3. Create a new set of points `P1` by creating two new points for each vector in `V` at `1/3*V` and `2/3*V` so that `P1[i] = 1/3*V` and `P1[i + 1] = 2/3V` where `|P1| = |V| * 2`.
 4. Set `P0 = P1` and repeat as desired.
 
 Chaikin can be done in 3D but there's some problems so everybody uses **Catmull-Clark**.
