@@ -14,7 +14,7 @@ Take for example two points `P1` and `P2` and the **affine combination**:
 P(t) = (1 - t)P1 + tP2
 ```
 
-The above combination is what is commonly known as **linear interpolation**. Commonly known as the `lerp` function in code.
+The above combination is what is commonly known as **linear interpolation**. Often named `lerp` in source code.
 
 If you have the following polynomials:
 ```
