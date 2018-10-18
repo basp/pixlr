@@ -69,7 +69,7 @@ Control points are also known as Chaikin's points or Bezier points. A straight u
 
 ### chaikin's algorithm
 1. Take a set of points `P0 = {P0[1], .. P0[n]}` where `|P0| >= 3`.
-2. Create a set of vectors `V` between those points where `V[i] = P[i + 1] - P[i]` where `|V| = |P0| - 1`.
+2. Create a set of vectors `V` between those points where `V[i] = P[i + 1] - P[i]` and `|V| = |P0| - 1`.
 3. Create a new set of points `P1` by creating two new points for each vector in `V` at `1/3*V` and `2/3*V` so that `P1[i] = 1/3*V` and `P1[i + 1] = 2/3V` where `|P1| = |V| * 2`.
 4. Set `P0 = P1` and repeat as desired.
 
