@@ -7,7 +7,7 @@ An **affine combination** is a linear combination of vectors `x[1]..x[n]`:
 ```
 a*x = a[1]x[1] + a[2]x[2] + ... + a[n]x[n]
 ```
-Where the sum of the coefficients `a[1..n]` is `1`.
+Where the sum of the coefficients (the *alpha* values) `a[1..n]` is `1`.
 
 Take for example two points `P1` and `P2` and the **affine combination**:
 ```
