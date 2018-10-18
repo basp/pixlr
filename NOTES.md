@@ -73,9 +73,7 @@ Control points are also known as Chaikin's points or Bezier points. A straight u
 3. Create a new set of points `P1` by creating two new points for each vector `V[i]` in `V` at `1/3*V[i]` and `2/3*V[i]` so that `P1[i] = 1/3*V[i]` and `P1[i + 1] = 2/3V[i]` where `|P1| = |V| * 2`.
 4. Set `P0 = P1` and repeat as desired.
 
-Chaikin can be done in 3D but there's some problems so everybody uses **Catmull-Clark**.
+Chaikin can be done in 3D but there's some problems so everybody uses **Catmull-Clark** instead.
 
 ### bezier's curve
-
-
-
+TODO
