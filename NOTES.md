@@ -14,16 +14,20 @@ Take for example two points `P1` and `P2` and the **affine combination**:
 P(t) = (1 - t)P1 + tP2
 ```
 
-The above combination is what is commonly known as **linear interpolation**. Often named `lerp` in source code.
+The above combination is what is commonly known as **linear interpolation**. Often named `lerp` in source code. It will plot a straight line between two points.
 
-If you have the following polynomials:
+I assume you can plot *exponential* functions using an **affine combination** with two components.
+
+If you have the three polynomials:
 ```
 U = (1 - t)^2
 V = 2t(1 - t)
 W = t^2
 ```
 
-And you sum them then `U + V + W = 1` which means they are an **affine combination**. With 3 points `P1`, `P2` and `P3` you can get to any point on a curve between these points using: 
+And you sum them then `U + V + W = 1` which means they are an **affine combination** as well. 
+
+With 3 points `P1`, `P2` and `P3` you can get to any point on a curve between these points using: 
 ```
 P(t) = (1 - t)^2P1 + 2t(1 - t)P2 + t^2P3
 ```
