@@ -57,7 +57,7 @@ You can rewrite the curve definition above in terms of vectors and matrices:
                    | -1  3 -3  1 |   | P4 | 
 ```
 
-The fact that we an rewrite our polynomials like this also means we can do these calculations relatively fast.
+The fact that we an rewrite our polynomials like this also means we can do the necessary calculations relatively fast.
 
 ## curves in the plane
 * Chaikin's algorithm
