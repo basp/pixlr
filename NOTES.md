@@ -16,9 +16,7 @@ P(t) = (1 - t)P1 + tP2
 
 The above combination is what is commonly known as **linear interpolation**. Often named `lerp` in source code. It will plot a straight line between two points.
 
-I assume you can plot *exponential* functions using an **affine combination** with two components.
-
-If you have the three polynomials:
+If you have the following three polynomials:
 ```
 U = (1 - t)^2
 V = 2t(1 - t)
