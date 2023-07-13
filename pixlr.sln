@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
@@ -8,6 +8,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixlr.Facts", "Pixlr.Facts\Pixlr.Facts.csproj", "{08473811-C358-449D-B28B-365C675DBDA7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixlr.Cmd", "Pixlr.Cmd\Pixlr.Cmd.csproj", "{8D68CD7A-F880-4857-B3E9-E50EB373415F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixlr.Turtle", "Pixlr.Turtle\Pixlr.Turtle.csproj", "{13E90811-4114-49B6-A040-B165599F7A3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,5 +60,17 @@ Global
 		{8D68CD7A-F880-4857-B3E9-E50EB373415F}.Release|x64.Build.0 = Release|x64
 		{8D68CD7A-F880-4857-B3E9-E50EB373415F}.Release|x86.ActiveCfg = Release|x86
 		{8D68CD7A-F880-4857-B3E9-E50EB373415F}.Release|x86.Build.0 = Release|x86
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|x64.Build.0 = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Debug|x86.Build.0 = Debug|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|x64.Build.0 = Release|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|x86.ActiveCfg = Release|Any CPU
+		{13E90811-4114-49B6-A040-B165599F7A3E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

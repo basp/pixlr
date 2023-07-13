@@ -1,8 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net46</TargetFramework>
-
+    <TargetFramework>net7.0-windows</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -14,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pixlr\Pixlr.csproj" />
+    <ProjectReference Include="..\Pixlr.Turtle\Pixlr.Turtle.csproj" />
   </ItemGroup>
 
 </Project>
