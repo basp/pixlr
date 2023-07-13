@@ -11,4 +11,8 @@
     <PackageReference Include="PowerArgs" Version="3.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pixlr.Turtle\Pixlr.Turtle.csproj" />
+  </ItemGroup>
+
 </Project>
