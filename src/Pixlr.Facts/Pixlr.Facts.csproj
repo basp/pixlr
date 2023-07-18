@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pixlr\Pixlr.csproj" />
-    <ProjectReference Include="..\Pixlr.Turtle\Pixlr.Turtle.csproj" />
   </ItemGroup>
 
 </Project>
