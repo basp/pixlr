@@ -28,4 +28,38 @@ public class Vector4Tests
         var expected = new Vector4(0, 1.5, 2, 1.2);
         Assert.Equal(expected, Vector4.Clamp(v, min, max));
     }
+
+    [Fact]
+    public void TestScalarDivision()
+    {
+        var v = new Vector4(-1.0, 3.0, 2.0, 4);
+        var expected = new Vector4(-0.5, 1.5, 1.0, 2);
+        Assert.Equal(expected, Vector4.Divide(v, 2));
+    }
+
+    [Fact]
+    public void TestVectorDivision()
+    {
+        var v = new Vector4(1, 2, 3, 4);
+        var w = new Vector4(-1, -2, -3, -4);
+        var expected = new Vector4(-1, -1, -1, -1);
+        Assert.Equal(expected, Vector4.Divide(v, w));
+    }
+
+    [Fact]
+    public void TestVectorLengthSquared()
+    {
+        var v = new Vector4(1, 2, 3, 4);
+        Assert.Equal(30, Vector4.LengthSquared(v));
+    }
+
+    [Fact]
+    public void TestVectorLength()
+    {
+        var v = new Vector4(1, 2, 3, 4);
+        Assert.Equal(
+            Math.Sqrt(30),
+            Vector4.Length(v),
+            tolerance: 1e-6);
+    }
 }
