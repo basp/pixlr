@@ -173,7 +173,7 @@ public class Matrix4x4
         $"({string.Join(", ", this.data)})";
 }
 
-internal static class Matrix4x4Extensions
+public static class Matrix4x4Extensions
 {
     public static Matrix4x4 RotateX(
         this Matrix4x4 self,

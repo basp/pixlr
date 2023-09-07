@@ -97,7 +97,11 @@ public record Vector4(double X, double Y, double Z, double W)
         throw new NotImplementedException();
 
     public static Vector4 Subtract(Vector4 u, Vector4 v) =>
-        throw new NotImplementedException();
+        new(
+            u.X - v.X,
+            u.Y - v.Y,
+            u.Z - v.Z,
+            u.W - v.W);
 
     /// <summary>
     /// Transforms a vector.
@@ -131,4 +135,16 @@ public record Vector4(double X, double Y, double Z, double W)
             (matrix[3, 3] * vector.W);
         return new Vector4(x, y, z, w);
     }
+
+    public static Vector4 operator +(Vector4 u, Vector4 v) =>
+        Add(u, v);
+
+    public static Vector4 operator -(Vector4 u, Vector4 v) =>
+        Subtract(u, v);
+
+    public static Vector4 operator *(Vector4 u, double s) =>
+        Multiply(u, s);
+
+    public static Vector4 operator *(double s, Vector4 u) =>
+        Multiply(s, u);
 }

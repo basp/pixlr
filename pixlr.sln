@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pixlr.Tests", "src\Pixlr.Te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E53CD967-A75E-41B1-A734-3657CBFEDCF3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pixlr.Tool", "src\Pixlr.Tool\Pixlr.Tool.csproj", "{69BD9989-F7D3-4266-AE3F-231CDFA69FFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{0945D282-1EB8-451E-9952-24A7A6392BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0945D282-1EB8-451E-9952-24A7A6392BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0945D282-1EB8-451E-9952-24A7A6392BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69BD9989-F7D3-4266-AE3F-231CDFA69FFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69BD9989-F7D3-4266-AE3F-231CDFA69FFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69BD9989-F7D3-4266-AE3F-231CDFA69FFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69BD9989-F7D3-4266-AE3F-231CDFA69FFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,5 +38,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9DBE078E-4251-481F-AC59-B141762E83A4} = {F55C1621-255C-4C0F-A0A1-6F08CD091BAB}
 		{0945D282-1EB8-451E-9952-24A7A6392BF7} = {F55C1621-255C-4C0F-A0A1-6F08CD091BAB}
+		{69BD9989-F7D3-4266-AE3F-231CDFA69FFF} = {F55C1621-255C-4C0F-A0A1-6F08CD091BAB}
 	EndGlobalSection
 EndGlobal
