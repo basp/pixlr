@@ -93,8 +93,11 @@ public record Vector4(double X, double Y, double Z, double W)
             -u.Z,
             -u.W);
 
-    public static Vector4 Normalize(Vector4 u) =>
-        throw new NotImplementedException();
+    public static Vector4 Normalize(Vector4 u)
+    {
+        var s = 1.0 / Length(u);
+        return u * s;
+    }
 
     public static Vector4 Subtract(Vector4 u, Vector4 v) =>
         new(

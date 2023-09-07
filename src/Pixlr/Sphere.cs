@@ -1,9 +1,24 @@
-﻿namespace Pixlr;
+﻿using System.Numerics;
+
+namespace Pixlr;
 
 public class Sphere : IShape
 {
     public Transform Transform { get; init; } = new(Matrix4x4.Identity);
 
+    public Vector4 GetNormal(Vector4 point)
+    {
+        var objectPoint = Vector4.Transform(point, this.Transform.Inverse);
+        var objectNormal = objectPoint - Vector4.CreatePosition(0, 0, 0);
+        var worldNormal = Vector4.Transform(
+                objectNormal,
+                Matrix4x4.Transpose(this.Transform.Inverse)) with
+            {
+                W = 0,
+            };
+        return Vector4.Normalize(worldNormal);
+    }
+    
     public IEnumerable<Intersection> IntersectAll(Ray ray)
     {
         ray = Ray.Transform(ray, this.Transform.Inverse);

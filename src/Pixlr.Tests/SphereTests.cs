@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices.ComTypes;
+﻿using System.Numerics;
+using System.Runtime.InteropServices.ComTypes;
 using NuGet.Frameworks;
 
 namespace Pixlr.Tests;
@@ -145,5 +146,77 @@ public class SphereTests
             .Order()
             .ToList();
         Assert.Empty(xs);
+    }
+
+    [Fact]
+    public void NormalAtPointOnAxis()
+    {
+        var s = new Sphere();
+        
+        var points = new[]
+        {
+            (1, 0, 0),
+            (0, 1, 0),
+            (0, 0, 1),
+            (Math.Sqrt(3) / 3, Math.Sqrt(3) / 3, Math.Sqrt(3) / 3),
+        };
+
+        var tests = points
+            .Select(p =>
+            {
+                var (x, y, z) = p;
+                return new
+                {
+                    Point = Vector4.CreatePosition(x, y, z),
+                    Expected = Vector4.CreateDirection(x, y, z),
+                };
+            });
+
+        foreach (var test in tests)
+        {
+            var actual = s.GetNormal(test.Point);
+            Assert.Equal(test.Expected, actual);
+            // The normal should be a normalized vector.
+            Assert.Equal(
+                1.0, 
+                Vector4.Length(actual), 
+                tolerance:1e-6);
+        }
+    }
+
+    [Fact]
+    public void ComputeTheNormalOnATranslatedSphere()
+    {
+        var m = Matrix4x4
+            .Identity
+            .Translate(0, 1, 0);
+        var s = new Sphere()
+        {
+            Transform = new Transform(m),
+        };
+        var p = Vector4.CreatePosition(0, 1.70711, -0.70711);
+        var actual = s.GetNormal(p);
+        var expected = Vector4.CreateDirection(0, 0.70711, -0.70711);
+        var comparer = new Vector4EqualityComparer(1e-5);
+        Assert.Equal(expected, actual, comparer);
+    }
+
+    [Fact]
+    public void ComputeTheNormalOnATransformedSphere()
+    {
+        var m = Matrix4x4
+            .Identity
+            .RotateZ(Math.PI / 5)
+            .Scale(1, 0.5, 1);
+        var s = new Sphere()
+        {
+            Transform = new Transform(m),
+        };
+        var sqrt2over2 = Math.Sqrt(2) / 2;
+        var p = Vector4.CreatePosition(0, sqrt2over2, -sqrt2over2);
+        var actual = s.GetNormal(p);
+        var expected = Vector4.CreateDirection(0, 0.97014, -0.24254);
+        var comparer = new Vector4EqualityComparer(1e-5);
+        Assert.Equal(expected, actual, comparer);
     }
 }
