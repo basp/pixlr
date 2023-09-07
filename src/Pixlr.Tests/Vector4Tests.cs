@@ -2,6 +2,8 @@
 
 public class Vector4Tests
 {
+    private static readonly double Sqrt2Over2 = Math.Sqrt(2) / 2;
+    
     [Fact]
     public void TestAbsoluteValue()
     {
@@ -208,7 +210,7 @@ public class Vector4Tests
         var fullQuarter = Matrix4x4.CreateRotationX(Math.PI / 2);
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.Equal(
-            Vector4.CreatePosition(0, Math.Sqrt(2) / 2, Math.Sqrt(2) / 2),
+            Vector4.CreatePosition(0, Sqrt2Over2, Sqrt2Over2),
             Vector4.Transform(p, halfQuarter),
             comparer);
         Assert.Equal(
@@ -225,7 +227,7 @@ public class Vector4Tests
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.True(Matrix4x4.Invert(halfQuarter, out var inv));
         Assert.Equal(
-            Vector4.CreatePosition(0, Math.Sqrt(2) / 2, -Math.Sqrt(2) / 2),
+            Vector4.CreatePosition(0, Sqrt2Over2, -Sqrt2Over2),
             Vector4.Transform(p, inv),
             comparer);
     }
@@ -238,7 +240,7 @@ public class Vector4Tests
         var fullQuarter = Matrix4x4.CreateRotationY(Math.PI / 2);
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.Equal(
-            Vector4.CreatePosition(Math.Sqrt(2) / 2, 0, Math.Sqrt(2) / 2),
+            Vector4.CreatePosition(Sqrt2Over2, 0, Sqrt2Over2),
             Vector4.Transform(p, halfQuarter),
             comparer);
         Assert.Equal(
@@ -255,7 +257,7 @@ public class Vector4Tests
         var fullQuarter = Matrix4x4.CreateRotationZ(Math.PI / 2);
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.Equal(
-            Vector4.CreatePosition(-Math.Sqrt(2) / 2, Math.Sqrt(2) / 2, 0),
+            Vector4.CreatePosition(-Sqrt2Over2, Sqrt2Over2, 0),
             Vector4.Transform(p, halfQuarter),
             comparer);
         Assert.Equal(
@@ -377,5 +379,24 @@ public class Vector4Tests
         var expected = Vector4.CreatePosition(15, 0, 7);
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.Equal(expected, Vector4.Transform(p, T), comparer);
+    }
+
+    [Fact]
+    public void ReflectVectorApproachingAt45Degrees()
+    {
+        var v = Vector4.CreateDirection(1, -1, 0);
+        var n = Vector4.CreateDirection(0, 1, 0);
+        var expected = Vector4.CreateDirection(1, 1, 0);
+        Assert.Equal(expected, Vector4.Reflect(v, n));
+    }
+
+    [Fact]
+    public void ReflectVectorOffASlantedSurface()
+    {
+        var v = Vector4.CreateDirection(0, -1, 0);
+        var n = Vector4.CreateDirection(Sqrt2Over2, Sqrt2Over2, 0);
+        var expected = Vector4.CreateDirection(1, 0, 0);
+        var comparer = new Vector4EqualityComparer(1e-6);
+        Assert.Equal(expected, Vector4.Reflect(v, n), comparer);
     }
 }

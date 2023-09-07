@@ -99,6 +99,9 @@ public record Vector4(double X, double Y, double Z, double W)
         return u * s;
     }
 
+    public static Vector4 Reflect(Vector4 u, Vector4 n) =>
+        u - n * 2 * Dot(u, n);
+
     public static Vector4 Subtract(Vector4 u, Vector4 v) =>
         new(
             u.X - v.X,

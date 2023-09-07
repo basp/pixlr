@@ -2,7 +2,7 @@
 
 public record Ray(Vector4 Origin, Vector4 Direction)
 {
-    public Vector4 GetPoint(double t) =>
+    public Vector4 GetPosition(double t) =>
         this.Origin + t * this.Direction;
 
     public static Ray Transform(Ray ray, Matrix4x4 matrix) =>
