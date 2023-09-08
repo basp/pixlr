@@ -156,7 +156,6 @@ public class WorldTests
         Assert.Equal(inner.Material.Color, actual);
     }
     
-    
     [Fact]
     public void RenderDefaultWorldWithCamera()
     {
@@ -173,5 +172,37 @@ public class WorldTests
         var comparer = new ColorEqualityComparer(1e-5);
         var actual = image[5, 5];
         Assert.Equal(expected, actual, comparer);
+    }
+
+    [Fact]
+    public void NoShadowWithNothingIsCollinearWithPointAndLight()
+    {
+        var w = this.DefaultWorld;
+        var p = Vector4.CreatePosition(0, 10, 0);
+        Assert.False(w.TestShadow(p));
+    }
+
+    [Fact]
+    public void TheShadowWhenObjectIsBetweenPointAndLight()
+    {
+        var w = this.DefaultWorld;
+        var p = Vector4.CreatePosition(10, -10, 10);
+        Assert.True(w.TestShadow(p));
+    }
+
+    [Fact]
+    public void NoShadowWhenObjectIsBehindTheLight()
+    {
+        var w = this.DefaultWorld;
+        var p = Vector4.CreatePosition(-20, 20, -20);
+        Assert.False(w.TestShadow(p));
+    }
+
+    [Fact]
+    public void NoShadowWhenObjectIsBehindThePoint()
+    {
+        var w = this.DefaultWorld;
+        var p = Vector4.CreatePosition(-2, 2, -2);
+        Assert.False(w.TestShadow(p));
     }
 }

@@ -59,4 +59,23 @@ public class MaterialTests
         var comparer = new ColorEqualityComparer(1e-5);
         Assert.Equal(expected, actual, comparer);
     }
+
+    [Fact]
+    public void LightingWithSurfaceInShadow()
+    {
+        var eye = Vector4.CreateDirection(0, 0, -1);
+        var normal = Vector4.CreateDirection(0, 0, -1);
+        var light = new PointLight(
+            Vector4.CreatePosition(0, 0, -10),
+            new Color(1, 1, 1));
+        var actual = this.m.GetColor(
+            light,
+            this.position,
+            eye,
+            normal,
+            shadow: true);
+        var expected = new Color(0.1, 0.1, 0.1);
+        var comparer = new ColorEqualityComparer(1e-6);
+        Assert.Equal(expected, actual, comparer);
+    }
 }

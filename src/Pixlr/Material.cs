@@ -9,28 +9,42 @@ public record Material(
 {
     public Material()
         : this(
-            new Color(1, 1, 1), 
-            0.1, 
-            0.9, 
-            0.9, 
+            new Color(1, 1, 1),
+            0.1,
+            0.9,
+            0.9,
             200.0)
     {
     }
+
+    public Color Lighting(PointLight light, Interaction intr) =>
+        this.GetColor(
+            light,
+            intr.Point,
+            intr.Eye,
+            intr.Normal);
 
     public Color GetColor(
         PointLight light,
         Vector4 position,
         Vector4 eyev,
-        Vector4 normalv)
+        Vector4 normalv,
+        bool shadow = false)
     {
         var effectiveColor = Color.Multiply(this.Color, light.Intensity);
         var lightv = Vector4.Normalize(light.Position - position);
         var lightDotNormal = Vector4.Dot(lightv, normalv);
+
+        var ambient = Color.Multiply(effectiveColor, this.Ambient);
+
+        if (shadow)
+        {
+            return ambient;
+        }
         
-        Color ambient = Color.Multiply(effectiveColor, this.Ambient);
         Color diffuse;
         Color specular;
-        
+
         if (lightDotNormal < 0)
         {
             diffuse = new(0, 0, 0);
