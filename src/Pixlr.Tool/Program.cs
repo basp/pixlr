@@ -128,4 +128,119 @@ static void Example3()
     ppm.Save(writer);
 }
 
-Example3();
+static void Example4()
+{
+    var floor = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4.CreateScale(10, 0.01, 10)),
+        Material = new Material()
+        {
+            Color = new Color(1, 0.9, 0.9),
+            Specular = 0,
+        },
+    };
+
+    var leftWall = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4
+                .Identity
+                .Scale(10, 0.01, 10)
+                .RotateX(Math.PI / 2)
+                .RotateY(-Math.PI / 4)
+                .Translate(0, 0, 5)),
+        Material = floor.Material,
+    };
+
+    var rightWall = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4
+                .Identity
+                .Scale(10, 0.01, 10)
+                .RotateX(Math.PI / 2)
+                .RotateY(Math.PI / 4)
+                .Translate(0, 0, 5)),
+        Material = floor.Material,
+    };
+
+    var middle = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4.CreateTranslation(-0.5, 1, 0.5)),
+        Material = new Material()
+        {
+            Color = new Color(0.1, 1, 0.5),
+            Diffuse = 0.7,
+            Specular = 0.3,
+        },
+    };
+
+    var right = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4
+                .Identity
+                .Scale(0.5, 0.5, 0.5)
+                .Translate(1.5, 0.5, -0.5)),
+        Material = new Material()
+        {
+            Color = new Color(0.5, 1, 0.1),
+            Diffuse = 0.7,
+            Specular = 0.3,
+        },
+    };
+
+    var left = new Sphere()
+    {
+        Transform = new Transform(
+            Matrix4x4
+                .Identity
+                .Scale(0.33, 0.33, 0.33)
+                .Translate(-1.5, 0.33, -0.75)),
+        Material = new Material()
+        {
+            Color = new Color(1, 0.8, 0.1),
+            Diffuse = 0.7,
+            Specular = 0.3,
+        },
+    };
+
+    var light = new PointLight(
+        Vector4.CreatePosition(-10, 10, -10),
+        new Color(1, 1, 1));
+
+    var camera = new Camera(200, 100, Math.PI / 3)
+    {
+        Transform = new Transform(
+            Matrix4x4.CreateLookAt(
+                Vector4.CreatePosition(0, 1.5, -5),
+                Vector4.CreatePosition(0, 1, 0),
+                Vector4.CreateDirection(0, 1, 0))),
+    };
+
+    var world = new World()
+    {
+        Objects = new List<IShape>
+        {
+            floor, 
+            leftWall, 
+            rightWall, 
+            middle, 
+            right, 
+            left,   
+        },
+        Lights = new List<PointLight>
+        {
+            light,  
+        },
+    };
+
+    var image = camera.Render(world);
+    using var stream = File.OpenWrite($@".\{nameof(Example4)}.ppm");
+    using var writer = new StreamWriter(stream);
+    image.Save(writer);
+}
+
+Example4();

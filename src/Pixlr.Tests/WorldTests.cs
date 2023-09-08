@@ -155,4 +155,23 @@ public class WorldTests
         var actual = w.GetColor(r);
         Assert.Equal(inner.Material.Color, actual);
     }
+    
+    
+    [Fact]
+    public void RenderDefaultWorldWithCamera()
+    {
+        var w = this.DefaultWorld;
+        var from = Vector4.CreatePosition(0, 0, -5);
+        var to = Vector4.CreatePosition(0, 0, 0);
+        var up = Vector4.CreateDirection(0, 1, 0);
+        var c = new Camera(11, 11, Math.PI / 2)
+        {
+            Transform = new Transform(Matrix4x4.CreateLookAt(from, to, up)),
+        };
+        var image = c.Render(w);
+        var expected = new Color(0.38066, 0.47583, 0.2855);
+        var comparer = new ColorEqualityComparer(1e-5);
+        var actual = image[5, 5];
+        Assert.Equal(expected, actual, comparer);
+    }
 }
