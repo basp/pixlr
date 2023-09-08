@@ -1,11 +1,11 @@
-﻿using System.Numerics;
-
-namespace Pixlr;
+﻿namespace Pixlr;
 
 public class Sphere : IShape
 {
     public Transform Transform { get; init; } = new(Matrix4x4.Identity);
 
+    public Material Material { get; set; } = new();
+    
     public Vector4 GetNormal(Vector4 point)
     {
         var objectPoint = Vector4.Transform(point, this.Transform.Inverse);

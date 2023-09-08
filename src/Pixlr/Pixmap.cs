@@ -35,14 +35,9 @@ public class Pixmap
         }
     }
         
-    private static double LinearToGamma(double x) => Math.Sqrt(x);
-    
     private void WriteColor(TextWriter w, Color color)
     {
         var (r, g, b) = color;
-        r = LinearToGamma(r);
-        g = LinearToGamma(g);
-        b = LinearToGamma(b);
         var intensity = new Interval(0, 0.999f);
         w.WriteLine(
             "{0} {1} {2}",

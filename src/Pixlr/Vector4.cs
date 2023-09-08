@@ -16,6 +16,8 @@ public record Vector4(double X, double Y, double Z, double W)
             v.Z + w.Z,
             v.W + w.W);
 
+    public Vector3 AsVector3() => new Vector3(this.X, this.Y, this.Z);
+    
     public static Vector4 Clamp(Vector4 v, Vector4 min, Vector4 max) =>
         new(
             Math.Clamp(v.X, min.X, max.X),
@@ -26,9 +28,15 @@ public record Vector4(double X, double Y, double Z, double W)
     public static Vector4 CreateDirection(double x, double y, double z) =>
         new(x, y, z, 0);
 
+    public static Vector4 CreateDirection(Vector3 u) =>
+        CreateDirection(u.X, u.Y, u.Z);
+    
     public static Vector4 CreatePosition(double x, double y, double z) =>
         new(x, y, z, 1);
 
+    public static Vector4 CreatePosition(Vector3 u) =>
+        CreatePosition(u.X, u.Y, u.Z);
+    
     public static Vector4 Divide(Vector4 v, double c) =>
         new(
             v.X / c,

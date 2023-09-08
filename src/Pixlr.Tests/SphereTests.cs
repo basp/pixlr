@@ -219,4 +219,22 @@ public class SphereTests
         var comparer = new Vector4EqualityComparer(1e-5);
         Assert.Equal(expected, actual, comparer);
     }
+
+    [Fact]
+    public void SphereHasDefaultMaterial()
+    {
+        var s = new Sphere();
+        Assert.Equal(new Material(), s.Material);
+    }
+
+    [Fact]
+    public void SphereCanBeAssignedMaterial()
+    {
+        var material = new Material { Ambient = 1 };
+        var s = new Sphere()
+        {
+            Material = material,
+        };
+        Assert.Equal(material, s.Material);
+    }
 }

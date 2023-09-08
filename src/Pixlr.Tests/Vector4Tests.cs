@@ -1,4 +1,6 @@
-﻿namespace Pixlr.Tests;
+﻿using System.Numerics;
+
+namespace Pixlr.Tests;
 
 public class Vector4Tests
 {
@@ -398,5 +400,26 @@ public class Vector4Tests
         var expected = Vector4.CreateDirection(1, 0, 0);
         var comparer = new Vector4EqualityComparer(1e-6);
         Assert.Equal(expected, Vector4.Reflect(v, n), comparer);
+    }
+
+    [Fact]
+    public void CrossProductForHomogeneousVectors()
+    {
+        var u = Vector4.CreateDirection(1, 2, 3);
+        var v = Vector4.CreateDirection(2, 3, 4);
+        Assert.Equal(
+            Vector4.CreateDirection(-1, 2, -1),
+            Vector3
+                .Cross(
+                    u.AsVector3(),
+                    v.AsVector3())
+                .ToVector4(0));
+        Assert.Equal(
+            Vector4.CreateDirection(1, -2, 1),
+            Vector3
+                .Cross(
+                    v.AsVector3(),
+                    u.AsVector3())
+                .ToVector4(0));
     }
 }

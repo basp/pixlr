@@ -50,6 +50,33 @@ public class Matrix4x4
         set => this.data[(row * 4) + col] = value;
     }
 
+    public static Matrix4x4 CreateLookAt(
+        Vector4 from,
+        Vector4 to,
+        Vector4 up)
+    {
+        var fwd = Vector4.Normalize(to - from);
+        var upn = Vector4.Normalize(up);
+        var left = Vector3
+            .Cross(
+                fwd.AsVector3(),
+                upn.AsVector3())
+            .ToVector4(0);
+        var trueUp = Vector3
+            .Cross(
+                left.AsVector3(),
+                fwd.AsVector3())
+            .ToVector4(0);
+        var orientation = new Matrix4x4(
+            left.X, left.Y, left.Z, 0,
+            trueUp.X, trueUp.Y, trueUp.Z, 0,
+            -fwd.X, -fwd.Y, -fwd.Z, 0,
+            0, 0, 0, 1);
+        return Multiply(
+            orientation,
+            Matrix4x4.CreateTranslation(-from.X, -from.Y, -from.Z));
+    }
+
     public static Matrix4x4 CreateRotationX(double radians) =>
         new(
             1, 0, 0, 0,

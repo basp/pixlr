@@ -62,4 +62,17 @@ public class Vector3Tests
             Vector3.Length(v),
             tolerance: 1e-6);
     }
+
+    [Fact]
+    public void TestCrossProduct()
+    {
+        var a = new Vector3(1, 2, 3);
+        var b = new Vector3(2, 3, 4);
+        Assert.Equal(
+            new Vector3(-1, 2, -1),
+            Vector3.Cross(a, b));
+        Assert.Equal(
+            new Vector3(1, -2, 1),
+            Vector3.Cross(b, a));
+    }
 }

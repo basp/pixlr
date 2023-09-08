@@ -1,4 +1,6 @@
-﻿namespace Pixlr;
+﻿using System.Runtime.CompilerServices;
+
+namespace Pixlr;
 
 public record Vector3(double X, double Y, double Z)
 {
@@ -21,7 +23,10 @@ public record Vector3(double X, double Y, double Z)
             Math.Clamp(v.Z, min.Z, max.Z));
 
     public static Vector3 Cross(Vector3 v, Vector3 w) =>
-        throw new NotImplementedException();
+        new(
+            v.Y * w.Z - v.Z * w.Y,
+            v.Z * w.X - v.X * w.Z,
+            v.X * w.Y - v.Y * w.X);
     
     public static Vector3 Divide(Vector3 v, double c) =>
         new(
@@ -42,4 +47,7 @@ public record Vector3(double X, double Y, double Z)
         v.X * v.X +
         v.Y * v.Y +
         v.Z * v.Z;
+
+    public Vector4 ToVector4(double w) =>
+        new Vector4(this.X, this.Y, this.Z, w);
 }

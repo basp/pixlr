@@ -1,4 +1,5 @@
-﻿using System.Xml.Xsl;
+﻿using System.Numerics;
+using System.Xml.Xsl;
 
 namespace Pixlr.Tests;
 
@@ -62,5 +63,59 @@ public class IntersectionTests
         };
         Assert.True(xs.TryGetHit(out var i));
         Assert.Equal(xs[3], i);
+    }
+
+    [Fact]
+    public void ComputingInteractionFromIntersection()
+    {
+        var r = new Ray(
+            Vector4.CreatePosition(0, 0, -5),
+            Vector4.CreateDirection(0, 0, 1));
+        var shape = new Sphere();
+        var i = new Intersection(4, shape);
+        var comps = Interaction.FromIntersection(i, r);
+        Assert.Equal(i.Obj, comps.Object);
+        Assert.Equal(
+            Vector4.CreatePosition(0, 0, -1), 
+            comps.Point);
+        Assert.Equal(
+            Vector4.CreateDirection(0, 0, -1),
+            comps.Eye);
+        Assert.Equal(
+            Vector4.CreateDirection(0, 0, -1),
+            comps.Normal);
+    }
+
+    [Fact]
+    public void TheHitWhenAnIntersectionOccursOnTheOutside()
+    {
+        var r = new Ray(
+            Vector4.CreatePosition(0, 0, -5),
+            Vector4.CreateDirection(0, 0, 1));
+        var shape = new Sphere();
+        var i = new Intersection(4, shape);
+        var intr = Interaction.FromIntersection(i, r);
+        Assert.False(intr.Inside);
+    }
+
+    [Fact]
+    public void TheHitWhenAnIntersectionOccursOnTheInside()
+    {
+        var r = new Ray(
+            Vector4.CreatePosition(0, 0, 0),
+            Vector4.CreateDirection(0, 0, 1));
+        var shape = new Sphere();
+        var i = new Intersection(1, shape);
+        var intr = Interaction.FromIntersection(i, r);
+        Assert.Equal(
+            Vector4.CreatePosition(0, 0, 1), 
+            intr.Point);
+        Assert.Equal(
+            Vector4.CreateDirection(0, 0, -1),
+            intr.Eye);
+        Assert.Equal(
+            Vector4.CreateDirection(0, 0, -1),
+            intr.Normal);
+        Assert.True(intr.Inside);
     }
 }
