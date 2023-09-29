@@ -31,13 +31,7 @@ public class World : IPrimitive
         // mean iterating over each light and adding the
         // colors together.
         var light = this.Lights.First();
-        var color = intr.Object.Material.Lighting(light, intr); 
-        // var color = intr.Object.Material.GetColor(
-        //     this.Lights.First(),
-        //     intr.Point,
-        //     intr.Eye,
-        //     intr.Normal);
-        return color;
+        return intr.Object.Material.Lighting(light, intr); 
     }
 
     public bool TestShadow(Vector4 point)
